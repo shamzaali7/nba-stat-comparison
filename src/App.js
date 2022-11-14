@@ -13,22 +13,27 @@ class App extends Component{
       playerOneStats: {},
       playerTwoStats: {}
     }
+
+    this.handleChangeOne = this.handleChangeOne.bind(this)
+    this.handleSubmitOne = this.handleSubmitOne.bind(this)
+    this.handleChangeTwo = this.handleChangeTwo.bind(this)
+    this.handleSubmitTwo = this.handleSubmitTwo.bind(this)
   }
 
   getPlayerOneId(){
     axios.get(`https://www.balldontlie.io/api/v1/players?search=${this.state.playerOneName}`)
-    .then(res => {
+    .then(async res => {
       console.log(res.data.data)
-      this.getPlayerOneStats(res.data.data[0].id)
+      await this.getPlayerOneStats(res.data.data[0].id)
     })
     .catch(error => {console.log(error)})
   }
 
   getPlayerTwoId(){
     axios.get(`https://www.balldontlie.io/api/v1/players?search=${this.state.playerTwoName}`)
-    .then(res => {
+    .then(async res => {
       console.log(res.data.data)
-      this.getPlayerTwoStats(res.data.data[0].id)
+      await this.getPlayerTwoStats(res.data.data[0].id)
     })
     .catch(error => {console.log(error)})
   }
@@ -57,7 +62,7 @@ class App extends Component{
   }
 
   handleChangeOne(e){
-    if(e.target.value.length > 0){
+    if(e.target.value.length > 1){
       this.setState({
         playerOneName: e.target.value
       })
