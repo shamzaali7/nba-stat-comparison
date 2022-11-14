@@ -2,8 +2,8 @@ import React from 'react';
 
 function Footer(){
     return(
-        <div>
-            
+        <div className="wrapperFooter">
+            <p>all rights reserved @shamzaali7@github.io</p>
         </div>
     )
 }

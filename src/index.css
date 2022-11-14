@@ -15,3 +15,8 @@ code {
 .fighter{
   display: flex;
 }
+
+.wrapperFooter{
+  position: fixed;
+  bottom: 0;
+}

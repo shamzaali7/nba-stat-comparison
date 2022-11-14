@@ -1,8 +1,11 @@
 import './App.css';
 import axios from 'axios';
 import React, {Component} from 'react';
-import Fighters from './Components/Fighters'
-import {Route, Routes, Link} from 'react-router-dom'
+import Home from './Components/Home';
+import Fighters from './Components/Fighters';
+import Header from './Components/Header';
+import Footer from './Components/Footer';
+import {Route, Routes, Link} from 'react-router-dom';
 
 class App extends Component{
   constructor(){
@@ -90,8 +93,21 @@ class App extends Component{
 
   render(){
     return (
-      <div className="App">
-        <Fighters handleChangeOne={this.handleChangeOne} handleChangeTwo={this.handleChangeTwo} handleSubmitOne={this.handleSubmitOne} handleSubmitTwo={this.handleSubmitTwo}/>
+      <div>
+        <Header/>
+        <Link to="/">
+          <span>Home </span>
+        </Link>
+        <Link to="/fighters">
+          <span>Choose Players</span>
+        </Link>
+        <Footer/>
+        <main>
+          <Routes>
+            <Route path="/" element={<Home/>}/>
+            <Route path="/fighters" element={<Fighters handleChangeOne={this.handleChangeOne} handleChangeTwo={this.handleChangeTwo} handleSubmitOne={this.handleSubmitOne} handleSubmitTwo={this.handleSubmitTwo}/>}/>
+          </Routes>
+        </main>
       </div>
     )
   }
@@ -109,3 +125,4 @@ export default App;
 // const [win, setWin]= useState()
 // const [picOne, setPicOne] = useState()
 // const [pisTwo, setPicTwo] = useState()
+
