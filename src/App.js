@@ -1,6 +1,8 @@
 import './App.css';
 import axios from 'axios';
 import React, {Component} from 'react';
+import Fighters from './Components/Fighters'
+import {Route, Routes, Link} from 'react-router-dom'
 
 class App extends Component{
   constructor(){
@@ -23,9 +25,10 @@ class App extends Component{
   }
 
   getPlayerTwoId(){
-    axios.get(`https://www.balldontlie.io/api/v1/players?search=${this.state.playerOneName}`)
+    axios.get(`https://www.balldontlie.io/api/v1/players?search=${this.state.playerTwoName}`)
     .then(res => {
       console.log(res.data.data)
+      this.getPlayerTwoStats(res.data.data[0].id)
     })
     .catch(error => {console.log(error)})
   }
@@ -34,22 +37,23 @@ class App extends Component{
     axios.get(`https://www.balldontlie.io/api/v1/season_averages?season=2022&player_ids[]=${playerOneId}`)
     .then(res => {
       console.log(res.data.data)
-      this.setState({playerStats: res.data.data[0]})
+      this.setState({playerOneStats: res.data.data[0]})
     })
     .catch(error => {console.log(error)})
   }
 
   getPlayerTwoStats(playerTwoId){
-    axios.get(`https://www.balldontlie.io/api/v1/season_averages?season=2022&player_ids[]=434`)
-    .then(res => {console.log(res.data.data)})
+    axios.get(`https://www.balldontlie.io/api/v1/season_averages?season=2022&player_ids[]=${playerTwoId}`)
+    .then(res => {
+      console.log(res.data.data)
+      this.setState({playerTwoStats: res.data.data[0]})
+    })
     .catch(error => {console.log(error)})
   }
 
   componentDidMount(){
     this.getPlayerOneId();
     this.getPlayerTwoId();
-    this.getPlayerOneStats();
-    this.getPlayerTwoStats();
   }
 
   render(){
