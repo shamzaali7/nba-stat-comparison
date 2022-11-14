@@ -8,8 +8,8 @@ class App extends Component{
   constructor(){
     super()
     this.state={
-      playerOneName: "lebron",
-      playerTwoName: "jayson",
+      playerOneName: null,
+      playerTwoName: null,
       playerOneStats: {},
       playerTwoStats: {}
     }
@@ -56,9 +56,37 @@ class App extends Component{
     this.getPlayerTwoId();
   }
 
+  handleChangeOne(e){
+    if(e.target.value.length > 0){
+      this.setState({
+        playerOneName: e.target.value
+      })
+    }
+  }
+
+  handleSubmitOne(e){
+    e.preventDefault()
+    this.getPlayerOneId()
+    console.log(this.playerOneStats)
+  }
+
+  handleChangeTwo(e){
+    if(e.target.value.length > 0){
+      this.setState({
+        playerTwoName: e.target.value
+      })
+    }
+  }
+
+  handleSubmitTwo(e){
+    e.preventDefault()
+    this.getPlayerTwoId()
+  }
+
   render(){
     return (
       <div className="App">
+        <Fighters handleChangeOne={this.handleChangeOne} handleChangeTwo={this.handleChangeTwo} handleSubmitOne={this.handleSubmitOne} handleSubmitTwo={this.handleSubmitTwo}/>
       </div>
     )
   }
