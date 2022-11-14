@@ -59,10 +59,11 @@ class App extends Component{
   componentDidMount(){
     this.getPlayerOneId();
     this.getPlayerTwoId();
+
   }
 
   handleChangeOne(e){
-    if(e.target.value.length > 1){
+    if(e.target.value.length > 0){
       this.setState({
         playerOneName: e.target.value
       })
@@ -72,7 +73,6 @@ class App extends Component{
   handleSubmitOne(e){
     e.preventDefault()
     this.getPlayerOneId()
-    console.log(this.playerOneStats)
   }
 
   handleChangeTwo(e){
