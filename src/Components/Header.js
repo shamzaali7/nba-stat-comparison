@@ -2,8 +2,8 @@ import React from 'react';
 
 function Header(){
     return(
-        <div>
-            <div>NBA 2022 Stat Comparison</div>
+        <div className="head">
+            <h1>NBA 2022 Stat Comparison</h1>
         </div>
     )
 }

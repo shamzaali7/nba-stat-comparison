@@ -12,11 +12,41 @@ code {
     monospace;
 }
 
-.fighter{
+.fighter {
   display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.player-one{
+  margin: 0 50px 0 0;
+}
+.player-two{
+  margin: 0 0 0 50px;
 }
 
-.wrapperFooter{
+.wrapper-footer {
   position: fixed;
   bottom: 0;
+  margin: 0 0 0 10px;
+}
+
+.head {
+  text-align: center;
+  background-color: black;
+  color: orange;
+  padding: 10px 10px 10px 10px;
+}
+
+.nav-bar {
+  text-decoration: none;
+  color: orange;
+  font-size: 20px;
+}
+
+.nav-bar.one{
+  margin: 0 0 0 10px;
+}
+
+.nav-bar.two{
+  margin: 0 0 0 10px;
 }

@@ -93,13 +93,13 @@ class App extends Component{
 
   render(){
     return (
-      <div>
+      <div className="all">
         <Header/>
-        <Link to="/">
-          <span>Home </span>
+        <Link style={{textDecoration: "none"}} to="/">
+          <span className="nav-bar one">Home </span>
         </Link>
-        <Link to="/fighters">
-          <span>Choose Players</span>
+        <Link style={{textDecoration: "none"}} to="/fighters">
+          <span className="nav-bar two">Choose Players</span>
         </Link>
         <Footer/>
         <main>
