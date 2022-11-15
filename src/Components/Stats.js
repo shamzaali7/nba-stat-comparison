@@ -1,13 +1,25 @@
 import React from 'react';
 
 function Stats(props){
+    let colorBox1= "red";
+    let colorBox2= "red";
+    function changeColor1(){
+        if (props.playerOneStats.pts > props.playerTwoStats.pts){
+            colorBox1 = "green";
+        }else{
+            colorBox2 = "green";
+        }
+    }
+    changeColor1();
+    // {(props.playerOneStats.pts > props.playerTwoStats.pts) && }
+
     return(
         <div><h1 className="stats-title">Season Averages</h1>
             <div className="container-stats">
             <div className="stats-one">
                 <ul>
                     <li>
-                        Points: {Math.round(props.playerOneStats.pts)}
+                        Points:  <span className={colorBox1}>{Math.round(props.playerOneStats.pts)}</span>
                     </li>
                     <li>
                         Rebounds: {Math.round(props.playerOneStats.dreb + props.playerOneStats.oreb)}
@@ -32,7 +44,7 @@ function Stats(props){
             <div className="stats-two">
                 <ul>
                     <li>
-                        Points: {Math.round(props.playerTwoStats.pts)}
+                        Points: <span className={colorBox2}>{Math.round(props.playerTwoStats.pts)}</span>
                     </li>
                     <li>
                         Rebounds: {Math.round(props.playerTwoStats.dreb + props.playerTwoStats.oreb)}

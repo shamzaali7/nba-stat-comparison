@@ -68,3 +68,11 @@ code {
 .stats-two{
   margin: 0 0 0 100px;
 }
+
+.green{
+  color: green;
+}
+
+.red{
+  color: red;
+}
