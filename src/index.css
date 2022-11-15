@@ -50,3 +50,21 @@ code {
 .nav-bar.two{
   margin: 0 0 0 10px;
 }
+
+.container-stats{
+  display: flex;
+  align-items:center;
+  justify-content: center;
+}
+
+.stats-title{
+  text-align: center;
+}
+
+.stats-one{
+  margin: 0 100px 0 0;
+}
+
+.stats-two{
+  margin: 0 0 0 100px;
+}

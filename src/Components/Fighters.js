@@ -6,13 +6,13 @@ function Fighters(props){
         <div className="fighter">
             <div className="player-one">
                 <form onSubmit={props.handleSubmitOne}>
-                    <input type="text" onChange={props.handleChangeOne} placeholder="Player 1"></input>
+                    <input type="text" onChange={props.handleChangeOne} placeholder="Enter full name"></input>
                     <button type="submit">Choose Player</button>
                 </form>
             </div>
             <div className="player-two">
                 <form onSubmit={props.handleSubmitTwo}>
-                    <input type="text" onChange={props.handleChangeTwo} placeholder="Player 2"></input>
+                    <input type="text" onChange={props.handleChangeTwo} placeholder="Enter full name"></input>
                     <button type="submit">Choose Player</button>
                 </form>
             </div>
