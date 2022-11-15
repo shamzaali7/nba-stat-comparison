@@ -1,6 +1,5 @@
 import React from 'react';
-import AnkleBreaker from '../Assets/AnkleBreaker.mp4'
-
+import {Link} from 'react-router-dom';
 
 function Fighters(props){
     return(
@@ -17,9 +16,11 @@ function Fighters(props){
                     <button type="submit">Choose Player</button>
                 </form>
             </div>
-            {/* <video src={AnkleBreaker}/> */}
+            <Link to="/stats">
+                <button>Click here to continue</button>
+            </Link>
         </div>
     )
 }
 
-export default Fighters
+export default Fighters;

@@ -5,6 +5,7 @@ import Home from './Components/Home';
 import Fighters from './Components/Fighters';
 import Header from './Components/Header';
 import Footer from './Components/Footer';
+import Stats from './Components/Stats';
 import {Route, Routes, Link} from 'react-router-dom';
 
 class App extends Component{
@@ -104,8 +105,9 @@ class App extends Component{
         <Footer/>
         <main>
           <Routes>
+            <Route path="/stats" element={<Stats playerOneStats={this.state.playerOneStats} playerTwoStats={this.state.playerTwoStats}/>}/>
             <Route path="/" element={<Home/>}/>
-            <Route path="/fighters" element={<Fighters handleChangeOne={this.handleChangeOne} handleChangeTwo={this.handleChangeTwo} handleSubmitOne={this.handleSubmitOne} handleSubmitTwo={this.handleSubmitTwo}/>}/>
+            <Route path="/fighters" element={<Fighters playerOneStats={this.state.playerOneStats} handleChangeOne={this.handleChangeOne} handleChangeTwo={this.handleChangeTwo} handleSubmitOne={this.handleSubmitOne} handleSubmitTwo={this.handleSubmitTwo}/>}/>
           </Routes>
         </main>
       </div>
@@ -126,3 +128,7 @@ export default App;
 // const [picOne, setPicOne] = useState()
 // const [pisTwo, setPicTwo] = useState()
 
+
+
+//documentation
+// https://stackoverflow.com/questions/51357334/how-would-i-round-a-number-eg-2-12-to-the-nearest-tenth-2-1-in-js
