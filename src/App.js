@@ -8,6 +8,8 @@ import Footer from './Components/Footer';
 import Stats from './Components/Stats';
 import {Route, Routes, Link} from 'react-router-dom';
 
+const nba = require('nba-api-client');
+
 class App extends Component{
   constructor(){
     super()
@@ -23,6 +25,8 @@ class App extends Component{
     this.handleChangeTwo = this.handleChangeTwo.bind(this)
     this.handleSubmitTwo = this.handleSubmitTwo.bind(this)
   }
+
+  let hello = nba.getPlayerId("james harden")
 
   getPlayerOneId(){
     axios.get(`https://www.balldontlie.io/api/v1/players?search=${this.state.playerOneName}`)
