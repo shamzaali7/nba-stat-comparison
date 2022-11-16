@@ -26,18 +26,18 @@ class App extends Component{
 
   getPlayerOneId(){
     axios.get(`https://www.balldontlie.io/api/v1/players?search=${this.state.playerOneName}`)
-    .then(async res => {
+    .then(res => {
       console.log(res.data.data)
-      await this.getPlayerOneStats(res.data.data[0].id)
+      this.getPlayerOneStats(res.data.data[0].id)
     })
     .catch(error => {console.log(error)})
   }
 
   getPlayerTwoId(){
     axios.get(`https://www.balldontlie.io/api/v1/players?search=${this.state.playerTwoName}`)
-    .then(async res => {
+    .then(res => {
       console.log(res.data.data)
-      await this.getPlayerTwoStats(res.data.data[0].id)
+      this.getPlayerTwoStats(res.data.data[0].id)
     })
     .catch(error => {console.log(error)})
   }

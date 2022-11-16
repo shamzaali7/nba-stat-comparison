@@ -1,17 +1,64 @@
 import React from 'react';
 
 function Stats(props){
-    let colorBox1= "red";
-    let colorBox2= "red";
+    const fGP1 = (props.playerOneStats.fgm/props.playerOneStats.fga*100).toFixed(1);
+    const fGP2 = (props.playerTwoStats.fgm/props.playerTwoStats.fga*100).toFixed(1);
+    const fG3p1 = ((props.playerOneStats.fg3m/props.playerOneStats.fg3a*100).toFixed(1));
+    const fG3p2 = ((props.playerTwoStats.fg3m/props.playerTwoStats.fg3a*100).toFixed(1));
+    let colorPts1= "red";
+    let colorPts2= "red";
+    let colorReb1= "red";
+    let colorReb2= "red";
+    let colorAst1= "red";
+    let colorAst2= "red";
+    let colorStl1= "red";
+    let colorStl2= "red";
+    let colorBlk1= "red";
+    let colorBlk2= "red";
+    let colorfGP1= "red";
+    let colorfGP2= "red";
+    let colorfG3p1= "red";
+    let colorfG3p2= "red";
+
     function changeColor1(){
         if (props.playerOneStats.pts > props.playerTwoStats.pts){
-            colorBox1 = "green";
+            colorPts1 = "green";
         }else{
-            colorBox2 = "green";
+            colorPts2 = "green";
         }
+        if (props.playerOneStats.reb > props.playerTwoStats.reb){
+            colorReb1 = "green";
+        }else{
+            colorReb2 = "green";
+        }
+        if (props.playerOneStats.ast > props.playerTwoStats.ast){
+            colorAst1 = "green";
+        }else{
+            colorAst2 = "green";
+        }
+        if (props.playerOneStats.blk > props.playerTwoStats.blk){
+            colorBlk1 = "green";
+        }else{
+            colorBlk2 = "green";
+        }
+        if (props.playerOneStats.stl > props.playerTwoStats.stl){
+            colorStl1 = "green";
+        }else{
+            colorStl2 = "green";
+        }
+        if (fGP1 > fGP2){
+            colorfGP1 = "green";
+        }else{
+            colorfGP2 = "green";
+        }
+        if (fG3p1 > fG3p2){
+            colorfG3p1 = "green";
+        }else{
+            colorfG3p2= "green";
+        }
+        
     }
     changeColor1();
-    // {(props.playerOneStats.pts > props.playerTwoStats.pts) && }
 
     return(
         <div><h1 className="stats-title">Season Averages</h1>
@@ -19,50 +66,50 @@ function Stats(props){
             <div className="stats-one">
                 <ul>
                     <li>
-                        Points:  <span className={colorBox1}>{Math.round(props.playerOneStats.pts)}</span>
+                        Points:  <span className={colorPts1}>{Math.round(props.playerOneStats.pts)}</span>
                     </li>
                     <li>
-                        Rebounds: {Math.round(props.playerOneStats.dreb + props.playerOneStats.oreb)}
+                        Rebounds: <span className={colorReb1}>{Math.round(props.playerOneStats.reb)}</span>
                     </li>
                     <li>
-                        Assists: {Math.round(props.playerOneStats.ast)}
+                        Assists: <span className={colorAst1}>{Math.round(props.playerOneStats.ast)}</span>
                     </li>
                     <li>
-                        Blocks: {(props.playerOneStats.blk)}
+                        Blocks: <span className={colorBlk1}>{(props.playerOneStats.blk)}</span>
                     </li>
                     <li>
-                        Steals: {props.playerOneStats.stl}
+                        Steals: <span className={colorStl1}>{props.playerOneStats.stl}</span>
                     </li>
                     <li>
-                        Field-goal percentage: {(props.playerOneStats.fgm/props.playerOneStats.fga*100).toFixed(1)}%
+                        Field-goal percentage: <span className={colorfGP1}>{fGP1}</span>%
                     </li>
                     <li>
-                        3-pt percentage: {(props.playerOneStats.fg3m/props.playerOneStats.fg3a*100).toFixed(1)}%
+                        3-pt percentage: <span className={colorfG3p1}>{fG3p1}</span>%
                     </li>
                 </ul>
             </div>
             <div className="stats-two">
                 <ul>
                     <li>
-                        Points: <span className={colorBox2}>{Math.round(props.playerTwoStats.pts)}</span>
+                        Points: <span className={colorPts2}>{Math.round(props.playerTwoStats.pts)}</span>
                     </li>
                     <li>
-                        Rebounds: {Math.round(props.playerTwoStats.dreb + props.playerTwoStats.oreb)}
+                        Rebounds: <span className={colorReb2}>{Math.round(props.playerTwoStats.reb)}</span>
                     </li>
                     <li>
-                        Assists: {Math.round(props.playerTwoStats.ast)}
+                        Assists: <span className={colorAst2}>{Math.round(props.playerTwoStats.ast)}</span>
                     </li>
                     <li>
-                        Blocks: {(props.playerTwoStats.blk)}
+                        Blocks: <span className={colorBlk2}>{(props.playerTwoStats.blk)}</span>
                     </li>
                     <li>
-                        Steals: {props.playerTwoStats.stl}
+                        Steals: <span className={colorStl2}>{props.playerTwoStats.stl}</span>
                     </li>
                     <li>
-                        Field-goal percentage: {(props.playerTwoStats.fgm/props.playerTwoStats.fga*100).toFixed(1)}%
+                        Field-goal percentage: <span className={colorfGP2}>{fGP2}</span>%
                     </li>
                     <li>
-                        3-pt percentage: {(props.playerTwoStats.fg3m/props.playerTwoStats.fg3a*100).toFixed(1)}%
+                        3-pt percentage: <span className={colorfG3p2}>{fG3p2}</span>%
                     </li>
                 </ul>
             </div>
