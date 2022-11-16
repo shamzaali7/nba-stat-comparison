@@ -5,6 +5,7 @@ function PlayerList(){
     return(
         <div>
             <p className="playerlist-title">Top 20 NBA players by NBCSports</p>
+            <p className="player-link"><a target="blank" href="https://www.nba.com/players">Link to nba player names</a></p>
             <div className="top-list">
                 <div className="player-top20">
                 <img src={`https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/203507.png`}/>
@@ -87,7 +88,6 @@ function PlayerList(){
                     <p>Paul George</p>
                 </div>
             </div>
-            <p className="player-link"><a target="blank" href="https://www.nba.com/players">Link to nba player names</a></p>
         </div>
     )
 }

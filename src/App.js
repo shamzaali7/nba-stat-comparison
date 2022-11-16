@@ -18,6 +18,8 @@ class App extends Component{
       playerTwoName: null,
       playerOneStats: {},
       playerTwoStats: {},
+      countCheckOne: 0,
+      countCheckTwo: 0
     }
 
     this.handleChangeOne = this.handleChangeOne.bind(this)
@@ -29,7 +31,8 @@ class App extends Component{
   getPlayerOneId(){
     axios.get(`https://www.balldontlie.io/api/v1/players?search=${this.state.playerOneName}`)
     .then(res => {
-      this.getPlayerOneStats(res.data.data[0].id)
+      this.getPlayerOneStats(res.data.data[0].id);
+      this.state.countCheckOne++;
     })
     .catch(error => {console.log(error)})
   }
@@ -37,7 +40,8 @@ class App extends Component{
   getPlayerTwoId(){
     axios.get(`https://www.balldontlie.io/api/v1/players?search=${this.state.playerTwoName}`)
     .then(res => {
-      this.getPlayerTwoStats(res.data.data[0].id)
+      this.getPlayerTwoStats(res.data.data[0].id);
+      this.state.countCheckTwo++;
     })
     .catch(error => {console.log(error)})
   }
@@ -45,7 +49,8 @@ class App extends Component{
   getPlayerOneStats(playerOneId){
     axios.get(`https://www.balldontlie.io/api/v1/season_averages?season=2022&player_ids[]=${playerOneId}`)
     .then(res => {
-      this.setState({playerOneStats: res.data.data[0]})
+      this.setState({playerOneStats: res.data.data[0]});
+      console.log(this.state.playerOneStats);
     })
     .catch(error => {console.log(error)})
   }
@@ -58,10 +63,10 @@ class App extends Component{
     .catch(error => {console.log(error)})
   }
 
-  componentDidMount(){
-    this.getPlayerOneId();
-    this.getPlayerTwoId();
-  }
+  // componentDidMount(){
+  //   this.getPlayerOneId();
+  //   this.getPlayerTwoId();
+  // }
 
   handleChangeOne(e){
     if(e.target.value.length > 0){
@@ -107,7 +112,7 @@ class App extends Component{
           <Routes>
             <Route path="/stats" element={<Stats playerOneName={this.state.playerOneName} playerTwoName={this.state.playerTwoName} playerOneStats={this.state.playerOneStats} playerTwoStats={this.state.playerTwoStats}/>}/>
             <Route path="/" element={<Home/>}/>
-            <Route path="/fighters" element={<Fighters playerOneName={this.state.playerOneName} playerTwoName={this.state.playerTwoName} playerOneStats={this.state.playerOneStats} handleChangeOne={this.handleChangeOne} handleChangeTwo={this.handleChangeTwo} handleSubmitOne={this.handleSubmitOne} handleSubmitTwo={this.handleSubmitTwo}/>}/>
+            <Route path="/fighters" element={<Fighters countCheckOne={this.state.countCheckOne} countCheckTwo={this.state.countCheckTwo} playerOneName={this.state.playerOneName} playerTwoName={this.state.playerTwoName} playerOneStats={this.state.playerOneStats} handleChangeOne={this.handleChangeOne} handleChangeTwo={this.handleChangeTwo} handleSubmitOne={this.handleSubmitOne} handleSubmitTwo={this.handleSubmitTwo}/>}/>
             <Route path="/playerlist" element={<PlayerList />}/>
           </Routes>
         </main>

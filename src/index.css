@@ -16,6 +16,7 @@ code {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 15px 0 0 0;
 }
 .player-one{
   margin: 0 50px 0 0;
@@ -48,9 +49,17 @@ code {
 }
 
 .nav-bar.two{
-  margin: 0 0 0 10px;
+  margin: 0 0 0 20px;
 }
 
+.nav-bar.three{
+  margin: 0 0 0 20px;
+}
+
+.button-continue{
+  text-align: center;
+  margin: 20px 0 0 0;
+}
 .container-stats{
   display: flex;
   align-items:center;
