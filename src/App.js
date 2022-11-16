@@ -8,7 +8,7 @@ import Footer from './Components/Footer';
 import Stats from './Components/Stats';
 import {Route, Routes, Link} from 'react-router-dom';
 import Players from './players.json';
-
+import PlayerList from './Components/PlayerList'
 
 class App extends Component{
   constructor(){
@@ -29,7 +29,6 @@ class App extends Component{
   getPlayerOneId(){
     axios.get(`https://www.balldontlie.io/api/v1/players?search=${this.state.playerOneName}`)
     .then(res => {
-      console.log(res.data.data)
       this.getPlayerOneStats(res.data.data[0].id)
     })
     .catch(error => {console.log(error)})
@@ -38,7 +37,6 @@ class App extends Component{
   getPlayerTwoId(){
     axios.get(`https://www.balldontlie.io/api/v1/players?search=${this.state.playerTwoName}`)
     .then(res => {
-      console.log(res.data.data)
       this.getPlayerTwoStats(res.data.data[0].id)
     })
     .catch(error => {console.log(error)})
@@ -47,7 +45,6 @@ class App extends Component{
   getPlayerOneStats(playerOneId){
     axios.get(`https://www.balldontlie.io/api/v1/season_averages?season=2022&player_ids[]=${playerOneId}`)
     .then(res => {
-      console.log(res.data.data)
       this.setState({playerOneStats: res.data.data[0]})
     })
     .catch(error => {console.log(error)})
@@ -56,7 +53,6 @@ class App extends Component{
   getPlayerTwoStats(playerTwoId){
     axios.get(`https://www.balldontlie.io/api/v1/season_averages?season=2022&player_ids[]=${playerTwoId}`)
     .then(res => {
-      console.log(res.data.data)
       this.setState({playerTwoStats: res.data.data[0]})
     })
     .catch(error => {console.log(error)})
@@ -103,12 +99,16 @@ class App extends Component{
         <Link style={{textDecoration: "none"}} to="/fighters">
           <span className="nav-bar two">Choose Players</span>
         </Link>
+        <Link style={{textDecoration: "none"}} to="/playerlist">
+          <span className="nav-bar three">Player List</span>
+        </Link>
         <Footer/>
         <main>
           <Routes>
             <Route path="/stats" element={<Stats playerOneName={this.state.playerOneName} playerTwoName={this.state.playerTwoName} playerOneStats={this.state.playerOneStats} playerTwoStats={this.state.playerTwoStats}/>}/>
             <Route path="/" element={<Home/>}/>
             <Route path="/fighters" element={<Fighters playerOneName={this.state.playerOneName} playerTwoName={this.state.playerTwoName} playerOneStats={this.state.playerOneStats} handleChangeOne={this.handleChangeOne} handleChangeTwo={this.handleChangeTwo} handleSubmitOne={this.handleSubmitOne} handleSubmitTwo={this.handleSubmitTwo}/>}/>
+            <Route path="/playerlist" element={<PlayerList />}/>
           </Routes>
         </main>
       </div>
@@ -133,3 +133,4 @@ export default App;
 
 //documentation
 // https://stackoverflow.com/questions/51357334/how-would-i-round-a-number-eg-2-12-to-the-nearest-tenth-2-1-in-js
+// https://medium.com/@avinash.sarguru/getting-nba-player-pictures-for-you-application-6106d5530943

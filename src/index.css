@@ -76,3 +76,24 @@ code {
 .red{
   color: red;
 }
+
+.player-link{
+  text-align: center;
+  text-decoration: none;
+}
+
+.top-list{
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 0 0 100px;
+}
+
+.playerlist-title{
+  text-align: center;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.player-top20{
+  flex-basis: 24%;
+}

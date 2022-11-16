@@ -21,10 +21,10 @@ function Stats(props){
     let colorfG3p1= "red";
     let colorfG3p2= "red";
 
-    let playerNameOne = props.playerOneName;
-    console.log(Players)
-    let playerOneID = Players.playerNameOne
-    console.log(playerOneID)
+    let playerNameOne = props.playerOneName
+    let playerNameTwo = props.playerTwoName
+    let playerOneID = Players[`${playerNameOne}`].PlayerID
+    let playerTwoID = Players[`${playerNameTwo}`].PlayerID
 
     function changeColor1(){
         if (props.playerOneStats.pts > props.playerTwoStats.pts){
@@ -98,6 +98,7 @@ function Stats(props){
                 </div>
                 <div className="stats-two">
                     <p>{props.playerTwoName.toUpperCase()}</p>
+                    <img src={`https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${playerTwoID}.png`}/>
                     <ul>
                         <li>
                             Points: <span className={colorPts2}>{Math.round(props.playerTwoStats.pts)}</span>
