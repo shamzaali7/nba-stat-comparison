@@ -1,5 +1,5 @@
 import './App.css';
-import axios from 'axios';
+import axios, { AxiosHeaders } from 'axios';
 import React, {Component} from 'react';
 import Home from './Components/Home';
 import Fighters from './Components/Fighters';
@@ -7,8 +7,8 @@ import Header from './Components/Header';
 import Footer from './Components/Footer';
 import Stats from './Components/Stats';
 import {Route, Routes, Link} from 'react-router-dom';
+import Players from './players.json';
 
-const nba = require('nba-api-client');
 
 class App extends Component{
   constructor(){
@@ -17,7 +17,7 @@ class App extends Component{
       playerOneName: null,
       playerTwoName: null,
       playerOneStats: {},
-      playerTwoStats: {}
+      playerTwoStats: {},
     }
 
     this.handleChangeOne = this.handleChangeOne.bind(this)
@@ -25,8 +25,6 @@ class App extends Component{
     this.handleChangeTwo = this.handleChangeTwo.bind(this)
     this.handleSubmitTwo = this.handleSubmitTwo.bind(this)
   }
-
-  let hello = nba.getPlayerId("james harden")
 
   getPlayerOneId(){
     axios.get(`https://www.balldontlie.io/api/v1/players?search=${this.state.playerOneName}`)
@@ -67,7 +65,6 @@ class App extends Component{
   componentDidMount(){
     this.getPlayerOneId();
     this.getPlayerTwoId();
-
   }
 
   handleChangeOne(e){
@@ -109,9 +106,9 @@ class App extends Component{
         <Footer/>
         <main>
           <Routes>
-            <Route path="/stats" element={<Stats playerOneStats={this.state.playerOneStats} playerTwoStats={this.state.playerTwoStats}/>}/>
+            <Route path="/stats" element={<Stats playerOneName={this.state.playerOneName} playerTwoName={this.state.playerTwoName} playerOneStats={this.state.playerOneStats} playerTwoStats={this.state.playerTwoStats}/>}/>
             <Route path="/" element={<Home/>}/>
-            <Route path="/fighters" element={<Fighters playerOneStats={this.state.playerOneStats} handleChangeOne={this.handleChangeOne} handleChangeTwo={this.handleChangeTwo} handleSubmitOne={this.handleSubmitOne} handleSubmitTwo={this.handleSubmitTwo}/>}/>
+            <Route path="/fighters" element={<Fighters playerOneName={this.state.playerOneName} playerTwoName={this.state.playerTwoName} playerOneStats={this.state.playerOneStats} handleChangeOne={this.handleChangeOne} handleChangeTwo={this.handleChangeTwo} handleSubmitOne={this.handleSubmitOne} handleSubmitTwo={this.handleSubmitTwo}/>}/>
           </Routes>
         </main>
       </div>

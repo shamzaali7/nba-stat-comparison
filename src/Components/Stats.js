@@ -1,4 +1,5 @@
 import React from 'react';
+import Players from '../players.json';
 
 function Stats(props){
     const fGP1 = (props.playerOneStats.fgm/props.playerOneStats.fga*100).toFixed(1);
@@ -19,6 +20,11 @@ function Stats(props){
     let colorfGP2= "red";
     let colorfG3p1= "red";
     let colorfG3p2= "red";
+
+    let playerNameOne = props.playerOneName;
+    console.log(Players)
+    let playerOneID = Players.playerNameOne
+    console.log(playerOneID)
 
     function changeColor1(){
         if (props.playerOneStats.pts > props.playerTwoStats.pts){
@@ -63,56 +69,59 @@ function Stats(props){
     return(
         <div><h1 className="stats-title">Season Averages</h1>
             <div className="container-stats">
-            <div className="stats-one">
-                <ul>
-                    <li>
-                        Points:  <span className={colorPts1}>{Math.round(props.playerOneStats.pts)}</span>
-                    </li>
-                    <li>
-                        Rebounds: <span className={colorReb1}>{Math.round(props.playerOneStats.reb)}</span>
-                    </li>
-                    <li>
-                        Assists: <span className={colorAst1}>{Math.round(props.playerOneStats.ast)}</span>
-                    </li>
-                    <li>
-                        Blocks: <span className={colorBlk1}>{(props.playerOneStats.blk)}</span>
-                    </li>
-                    <li>
-                        Steals: <span className={colorStl1}>{props.playerOneStats.stl}</span>
-                    </li>
-                    <li>
-                        Field-goal percentage: <span className={colorfGP1}>{fGP1}</span>%
-                    </li>
-                    <li>
-                        3-pt percentage: <span className={colorfG3p1}>{fG3p1}</span>%
-                    </li>
-                </ul>
-            </div>
-            <div className="stats-two">
-                <ul>
-                    <li>
-                        Points: <span className={colorPts2}>{Math.round(props.playerTwoStats.pts)}</span>
-                    </li>
-                    <li>
-                        Rebounds: <span className={colorReb2}>{Math.round(props.playerTwoStats.reb)}</span>
-                    </li>
-                    <li>
-                        Assists: <span className={colorAst2}>{Math.round(props.playerTwoStats.ast)}</span>
-                    </li>
-                    <li>
-                        Blocks: <span className={colorBlk2}>{(props.playerTwoStats.blk)}</span>
-                    </li>
-                    <li>
-                        Steals: <span className={colorStl2}>{props.playerTwoStats.stl}</span>
-                    </li>
-                    <li>
-                        Field-goal percentage: <span className={colorfGP2}>{fGP2}</span>%
-                    </li>
-                    <li>
-                        3-pt percentage: <span className={colorfG3p2}>{fG3p2}</span>%
-                    </li>
-                </ul>
-            </div>
+                <div className="stats-one">
+                    <p>{props.playerOneName.toUpperCase()}</p>
+                    <img src={`https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${playerOneID}.png`}/>
+                    <ul>
+                        <li>
+                            Points:  <span className={colorPts1}>{Math.round(props.playerOneStats.pts)}</span>
+                        </li>
+                        <li>
+                            Rebounds: <span className={colorReb1}>{Math.round(props.playerOneStats.reb)}</span>
+                        </li>
+                        <li>
+                            Assists: <span className={colorAst1}>{Math.round(props.playerOneStats.ast)}</span>
+                        </li>
+                        <li>
+                            Blocks: <span className={colorBlk1}>{(props.playerOneStats.blk)}</span>
+                        </li>
+                        <li>
+                            Steals: <span className={colorStl1}>{props.playerOneStats.stl}</span>
+                        </li>
+                        <li>
+                            Field-goal percentage: <span className={colorfGP1}>{fGP1}</span>%
+                        </li>
+                        <li>
+                            3-pt percentage: <span className={colorfG3p1}>{fG3p1}</span>%
+                        </li>
+                    </ul>
+                </div>
+                <div className="stats-two">
+                    <p>{props.playerTwoName.toUpperCase()}</p>
+                    <ul>
+                        <li>
+                            Points: <span className={colorPts2}>{Math.round(props.playerTwoStats.pts)}</span>
+                        </li>
+                        <li>
+                            Rebounds: <span className={colorReb2}>{Math.round(props.playerTwoStats.reb)}</span>
+                        </li>
+                        <li>
+                            Assists: <span className={colorAst2}>{Math.round(props.playerTwoStats.ast)}</span>
+                        </li>
+                        <li>
+                            Blocks: <span className={colorBlk2}>{(props.playerTwoStats.blk)}</span>
+                        </li>
+                        <li>
+                            Steals: <span className={colorStl2}>{props.playerTwoStats.stl}</span>
+                        </li>
+                        <li>
+                            Field-goal percentage: <span className={colorfGP2}>{fGP2}</span>%
+                        </li>
+                        <li>
+                            3-pt percentage: <span className={colorfG3p2}>{fG3p2}</span>%
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     )
