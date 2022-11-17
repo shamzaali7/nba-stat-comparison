@@ -62,3 +62,6 @@ Total | | 15hrs | 20hrs | 20hrs
 ##### Error: Cannot read properties of undefined reading State
 ##### Resolution: Was supposed to use props (accidental)
 
+##### Error: Cannot read properties of undefined reading PlayerID, Syntax error for calling object wihtin object
+##### Resolution: Had to put brackets and back quotes around the players name which was being interpolated
+
