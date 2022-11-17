@@ -164,3 +164,7 @@ input{
 button:hover{
   background-color: rgba(32, 178, 170, .2);
 }
+
+.nav-bar:hover{
+  color: rgba(255, 165, 0, .5);
+}
