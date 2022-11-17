@@ -51,7 +51,6 @@ class App extends Component{
     axios.get(`https://www.balldontlie.io/api/v1/season_averages?season=2022&player_ids[]=${playerOneId}`)
     .then(res => {
       this.setState({playerOneStats: res.data.data[0]});
-      console.log(this.state.playerOneStats);
     })
     .catch(error => {console.log(error)})
   }
@@ -64,10 +63,10 @@ class App extends Component{
     .catch(error => {console.log(error)})
   }
 
-  // componentDidMount(){
-  //   this.getPlayerOneId();
-  //   this.getPlayerTwoId();
-  // }
+  componentDidMount(){
+    this.getPlayerOneId();
+    this.getPlayerTwoId();
+  }
 
   handleChangeOne(e){
     if(e.target.value.length > 0){

@@ -21,11 +21,6 @@ function Stats(props){
     let colorfG3p1= "red";
     let colorfG3p2= "red";
 
-    let playerNameOne = props.playerOneName
-    let playerNameTwo = props.playerTwoName
-    let playerOneID = Players[`${playerNameOne}`].PlayerID
-    let playerTwoID = Players[`${playerNameTwo}`].PlayerID
-
     function changeColor1(){
         if (props.playerOneStats.pts > props.playerTwoStats.pts){
             colorPts1 = "green";
@@ -64,6 +59,10 @@ function Stats(props){
         }
         
     }
+    let playerNameOne = props.playerOneName
+    let playerNameTwo = props.playerTwoName
+    let playerOneID = Players[`${playerNameOne}`].PlayerID
+    let playerTwoID = Players[`${playerNameTwo}`].PlayerID
     changeColor1();
 
     return(
