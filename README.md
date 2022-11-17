@@ -59,3 +59,6 @@ Total | | 15hrs | 20hrs | 20hrs
 ##### Error: I looked around everywhere for an API that contains NBA player headshots but didn't manage to find any. I came across an article that had a url for nba player headshots based on player ID's but couldnt use that because the NBA api they were using to get the player pictures had a blocked CORS policy. 
 ##### Resolution: I searched deep and found an nba api client that could be installed through the terminal. Within that API was player ID's in a json file. With the url from the previous website and the newly obtained ID's, I was finally able to retrieve all of the player headshots.
 
+##### Error: Cannot read properties of undefined reading State
+##### Resolution: Was supposed to use props (accidental)
+
