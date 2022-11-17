@@ -147,3 +147,20 @@ video{
 .question-img2{
   margin: 0 0 0 50px;
 }
+
+button{
+  border-style: solid;
+  border-color: rgba(0,0,0,0.5);
+  background-color: rgba(0,0,0,0.7);
+  outline: inherit;
+  border-radius: 5px;
+  color: orange;
+}
+
+input{
+  border-radius: 5px;
+}
+
+button:hover{
+  background-color: rgba(32, 178, 170, .2);
+}

@@ -7,9 +7,7 @@ import Header from './Components/Header';
 import Footer from './Components/Footer';
 import Stats from './Components/Stats';
 import {Route, Routes, Link} from 'react-router-dom';
-import IndividualStats from './Components/IndividualStats';
 import PlayerList from './Components/PlayerList';
-import MappedStats from './Components/MappedStats';
 
 class App extends Component{
   constructor(){
@@ -114,7 +112,6 @@ class App extends Component{
             <Route path="/" element={<Home/>}/>
             <Route path="/fighters" element={<Fighters countCheckOne={this.state.countCheckOne} countCheckTwo={this.state.countCheckTwo} playerOneName={this.state.playerOneName} playerTwoName={this.state.playerTwoName} playerOneStats={this.state.playerOneStats} handleChangeOne={this.handleChangeOne} handleChangeTwo={this.handleChangeTwo} handleSubmitOne={this.handleSubmitOne} handleSubmitTwo={this.handleSubmitTwo}/>}/>
             <Route path="/playerlist" element={<PlayerList />}/>
-            <Route path="/playerdetails/:name/" element={<MappedStats />}/>
           </Routes>
         </main>
       </div>
@@ -123,18 +120,6 @@ class App extends Component{
 }
 
 export default App;
-
-
-
-// const [playerOne, setPlayerOne] = useState({
-//   playerName: null,
-//   playerStats: 0
-// })
-// const [playerTwo, setPlayerTwo] = useState()
-// const [win, setWin]= useState()
-// const [picOne, setPicOne] = useState()
-// const [pisTwo, setPicTwo] = useState()
-
 
 
 //documentation
