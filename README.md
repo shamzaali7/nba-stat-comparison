@@ -38,15 +38,15 @@
 
 # Time Frames
 
-Component | Priority | Estimated Time | Time Invested | Actual Time
+Component | Estimated Time | Time Invested | Actual Time
 ---- | ---- | ---- | ---- | ----
-Creating Components | | 1hr | 2hrs | 2hrs   
-Setting up + Initializing API | | 4hrs | 6hrs | 6hrs
-Making links and lining routes | | 1hr | 2hrs | 2hrs
-Adding Form and passing its changes | | 3hrs | 3hrs | 3hrs
-Passing state and updating stats component | | 2hrs | 3hrs | 3hrs
-Retrieving and implementing new API with separate url | | 4hrs | 4hrs | 4hrs
-Total | | 15hrs | 20hrs | 20hrs
+Creating Components | 1hr | 2hrs | 2hrs   
+Setting up + Initializing API | 4hrs | 6hrs | 6hrs
+Making links and lining routes | 1hr | 2hrs | 2hrs
+Adding Form and passing its changes | 3hrs | 3hrs | 3hrs
+Passing state and updating stats component | 2hrs | 3hrs | 3hrs
+Retrieving and implementing new API with separate url | 4hrs | 4hrs | 4hrs
+Total | 15hrs | 20hrs | 20hrs
 
 # Additional Libraries
 - Axios was used to assist the import of API's onto the code
