@@ -4,6 +4,14 @@ import {Link} from 'react-router-dom';
 function Fighters(props){
     return(
         <div>
+            <div className="container-question">
+                <div className="question-img1">
+                    <img height="300px" src="https://i.imgur.com/XMN6vJF.jpg"></img>
+                </div>
+                <div className="question-img2">
+                    <img height="300px"src="https://i.imgur.com/XMN6vJF.jpg"></img>
+                </div>
+            </div>
             <div className="fighter">
                 <div className="player-one">
                     <form onSubmit={props.handleSubmitOne}>
