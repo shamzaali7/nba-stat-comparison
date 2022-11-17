@@ -65,3 +65,5 @@ Total | | 15hrs | 20hrs | 20hrs
 ##### Error: Cannot read properties of undefined reading PlayerID, Syntax error for calling object wihtin object
 ##### Resolution: Had to put brackets and back quotes around the players name which was being interpolated
 
+##### Error: {props.playerOneName &&}
+##### Resolution: Replaced playerOneName with a counter to see if a player name was submitted and show a check mark.
