@@ -7,8 +7,9 @@ import Header from './Components/Header';
 import Footer from './Components/Footer';
 import Stats from './Components/Stats';
 import {Route, Routes, Link} from 'react-router-dom';
-import Players from './players.json';
-import PlayerList from './Components/PlayerList'
+import IndividualStats from './Components/IndividualStats';
+import PlayerList from './Components/PlayerList';
+import MappedStats from './Components/MappedStats';
 
 class App extends Component{
   constructor(){
@@ -114,6 +115,7 @@ class App extends Component{
             <Route path="/" element={<Home/>}/>
             <Route path="/fighters" element={<Fighters countCheckOne={this.state.countCheckOne} countCheckTwo={this.state.countCheckTwo} playerOneName={this.state.playerOneName} playerTwoName={this.state.playerTwoName} playerOneStats={this.state.playerOneStats} handleChangeOne={this.handleChangeOne} handleChangeTwo={this.handleChangeTwo} handleSubmitOne={this.handleSubmitOne} handleSubmitTwo={this.handleSubmitTwo}/>}/>
             <Route path="/playerlist" element={<PlayerList />}/>
+            <Route path="/playerdetails/:name/" element={<MappedStats />}/>
           </Routes>
         </main>
       </div>
@@ -139,3 +141,4 @@ export default App;
 //documentation
 // https://stackoverflow.com/questions/51357334/how-would-i-round-a-number-eg-2-12-to-the-nearest-tenth-2-1-in-js
 // https://medium.com/@avinash.sarguru/getting-nba-player-pictures-for-you-application-6106d5530943
+// https://www.youtube.com/watch?v=LSRNmhLS76o&t=1s&ab_channel=CodeCommerce

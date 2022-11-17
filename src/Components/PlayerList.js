@@ -1,11 +1,11 @@
-import eact, {useState} from 'react';
+import React, {useState} from 'react';
 import axios, { AxiosHeaders } from 'axios';
 
 function PlayerList(){
     return(
         <div>
             <p className="playerlist-title">Top 20 NBA players by NBCSports</p>
-            <p className="player-link"><a target="blank" href="https://www.nba.com/players">Link to nba player names</a></p>
+            <p className="player-link"><a target="blank" href="https://www.nba.com/players">Link to all current nba player names</a></p>
             <div className="top-list">
                 <div className="player-top20">
                 <img src={`https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/203507.png`}/>
@@ -77,7 +77,7 @@ function PlayerList(){
                 </div>
                 <div className="player-top20">
                 <img src={`https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/203081.png`}/>
-                    <p>Damien Lillard</p>
+                    <p>Damian Lillard</p>
                 </div>
                 <div className="player-top20">
                 <img src={`https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/203078.png`}/>

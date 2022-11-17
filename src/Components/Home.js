@@ -1,11 +1,11 @@
 import React from 'react';
-import Header from './Header';
-import Footer from './Footer';
+import AnkleBreaker from '../Assets/AnkleBreaker.mp4'
+
 
 function Home(){
     return(
-        <div>
-            
+        <div className="video-background">
+            <video src={AnkleBreaker} autoPlay loop muted/>
         </div>
     )
 }
