@@ -1,24 +1,29 @@
 # Project Description
 - The function of this app is to allow NBA fans to search for their favorite players and compare their current season stats with other players with a similiar caliber. It is oriented for everyone but is specifically a useful source for people that play fantasy basketball and need updated stats.
+
 # Project Links
-[Github Repo](https://github.com/shamzaali7/nba-stat-comparison)
-[Deployed Site](https://nba-stat-comparison-gkoi.vercel.app/)
+- [Github Repo](https://github.com/shamzaali7/nba-stat-comparison)
+- [Deployed Site](https://nba-stat-comparison-gkoi.vercel.app/)
 
 # Wireframes & React Component Hierarchy
-[Wireframes](https://whimsical.com/project-2-basketball-AiSRB8yEHakkXUDv4VLWyn)
-[React Architecture](src/Assets/ReactComponentHierarchy.jpg)
+- [Wireframes](https://whimsical.com/project-2-basketball-AiSRB8yEHakkXUDv4VLWyn)
+- [React Architecture](src/Assets/ReactComponentHierarchy.jpg)
+
 # MVP/PostMVP
 - MVP for this website consists of a useable "compare players" page that allows the user to input two of their preferred players and be redirected to a stats page that provides them with a comparison of the current season averages of the two players.
 
 - Post MVP is the players list page that provides the users with a current top 20 players list as well as a link to all current NBA players. 
+
 ### MVP
 - Grab information from an NBA API through a fetch request with axios
 - Provide the user with an input field to access the API data
 - Take that data and output the values of the player requested by the user
+
 ### Post MVP
 - Use another NBA API to grab player ID's
 - Interpolate user ID's in the url of a png website to access player pictures
 - Print pictures of the selected players along with the stats
+
 # Components
 
 | Components  | Description                                                                                 |
