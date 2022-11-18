@@ -70,7 +70,7 @@ function Stats(props){
             <div className="container-stats">
                 <div className="stats-one">
                     <p>{props.playerOneName.toUpperCase()}</p>
-                    <img src={`https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${playerOneID}.png`}/>
+                    <img src={`https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${playerOneID}.png`} alt={playerNameOne}/>
                     <ul>
                         <li>
                             Points:  <span className={colorPts1}>{Math.round(props.playerOneStats.pts)}</span>
@@ -97,7 +97,7 @@ function Stats(props){
                 </div>
                 <div className="stats-two">
                     <p>{props.playerTwoName.toUpperCase()}</p>
-                    <img src={`https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${playerTwoID}.png`}/>
+                    <img src={`https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${playerTwoID}.png`} alt={playerNameTwo}/>
                     <ul>
                         <li>
                             Points: <span className={colorPts2}>{Math.round(props.playerTwoStats.pts)}</span>

@@ -1,5 +1,5 @@
 import './App.css';
-import axios, { AxiosHeaders } from 'axios';
+import axios from 'axios';
 import React, {Component} from 'react';
 import Home from './Components/Home';
 import Fighters from './Components/Fighters';
