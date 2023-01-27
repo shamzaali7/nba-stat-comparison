@@ -16,15 +16,15 @@ function Players(props){
             <div className="fighter">
                 <div className="player-one">
                     <form onSubmit={props.handleSubmitOne}>
-                        <input type="text" onChange={props.handleChangeOne} placeholder="Enter full name"></input>
-                        <button type="submit">Choose Player</button>
+                        <input type="text" className="input-area" onChange={props.handleChangeOne} placeholder="Enter full name"></input>
+                        <button type="submit" className="input-btn">Choose Player</button>
                         {props.countCheckOne > 0 && <span> ✅</span>}
                     </form>
                 </div>
                 <div className="player-two">
                     <form onSubmit={props.handleSubmitTwo}>
-                        <input type="text" onChange={props.handleChangeTwo} placeholder="Enter full name"></input>
-                        <button type="submit">Choose Player</button>
+                        <input type="text" className="input-area" onChange={props.handleChangeTwo} placeholder="Enter full name"></input>
+                        <button type="submit" className="input-btn">Choose Player</button>
                         {props.countCheckTwo > 0 && <span> ✅</span>}
                     </form>
                 </div>
@@ -32,7 +32,7 @@ function Players(props){
             {props.countCheckOne + props.countCheckTwo === 2 &&
             (<div className="button-continue">
                 <Link to="/stats">
-                    <button>Click here to continue</button>
+                    <button className="input-btn">Click here to continue</button>
                 </Link>
             </div>
             )}
