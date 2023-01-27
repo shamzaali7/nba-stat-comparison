@@ -2,7 +2,7 @@ import './App.css';
 import axios from 'axios';
 import React, {Component} from 'react';
 import Home from './Components/Home';
-import Fighters from './Components/Fighters';
+import Players from './Components/Players';
 import Header from './Components/Header';
 import Footer from './Components/Footer';
 import Stats from './Components/Stats';
@@ -31,19 +31,23 @@ class App extends Component{
   async getPlayerOneId(){
     await axios.get(`https://www.balldontlie.io/api/v1/players?search=${this.state.playerOneName}`)
     .then(async res => {
-      this.getPlayerOneStats(res.data.data[0].id);
+      await this.getPlayerOneStats(res.data.data[0].id);
       this.setState({countCheckOne: 1});
     })
-    .catch(error => {console.log(error)})
+    .catch(error => {
+      alert("Unable to find player, please try again");
+    })
   }
 
   async getPlayerTwoId(){
     await axios.get(`https://www.balldontlie.io/api/v1/players?search=${this.state.playerTwoName}`)
     .then(async res => {
-      this.getPlayerTwoStats(res.data.data[0].id);
+      await this.getPlayerTwoStats(res.data.data[0].id);
       this.setState({countCheckTwo: 1});
     })
-    .catch(error => {console.log(error)})
+    .catch(error => {
+      alert("Unable to find player, please try again");
+    })
   }
 
   async getPlayerOneStats(playerOneId){
@@ -100,18 +104,18 @@ class App extends Component{
         <Link style={{textDecoration: "none"}} to="/">
           <span className="nav-bar one">Home </span>
         </Link>
-        <Link style={{textDecoration: "none"}} to="/fighters">
-          <span className="nav-bar two">Choose Players</span>
-        </Link>
         <Link style={{textDecoration: "none"}} to="/playerlist">
           <span className="nav-bar three">Player List</span>
+        </Link>
+        <Link style={{textDecoration: "none"}} to="/players">
+          <span className="nav-bar two">Choose Players</span>
         </Link>
         <Footer/>
         <main>
           <Routes>
             <Route path="/stats" element={<Stats playerOneName={this.state.playerOneName} playerTwoName={this.state.playerTwoName} playerOneStats={this.state.playerOneStats} playerTwoStats={this.state.playerTwoStats} handleCountCheck={this.handleCountCheck}/>}/>
             <Route path="/" element={<Home/>}/>
-            <Route path="/fighters" element={<Fighters countCheckOne={this.state.countCheckOne} countCheckTwo={this.state.countCheckTwo} playerOneName={this.state.playerOneName} playerTwoName={this.state.playerTwoName} playerOneStats={this.state.playerOneStats} handleChangeOne={this.handleChangeOne} handleChangeTwo={this.handleChangeTwo} handleSubmitOne={this.handleSubmitOne} handleSubmitTwo={this.handleSubmitTwo} handleCountCheck={this.handleCountCheck}/>}/>
+            <Route path="/players" element={<Players countCheckOne={this.state.countCheckOne} countCheckTwo={this.state.countCheckTwo} playerOneName={this.state.playerOneName} playerTwoName={this.state.playerTwoName} playerOneStats={this.state.playerOneStats} handleChangeOne={this.handleChangeOne} handleChangeTwo={this.handleChangeTwo} handleSubmitOne={this.handleSubmitOne} handleSubmitTwo={this.handleSubmitTwo} handleCountCheck={this.handleCountCheck}/>}/>
             <Route path="/playerlist" element={<PlayerList />}/>
           </Routes>
         </main>

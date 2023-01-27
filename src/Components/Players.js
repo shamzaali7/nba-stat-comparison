@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-function Fighters(props){
+function Players(props){
 
     return(
         <div>
@@ -38,4 +38,4 @@ function Fighters(props){
     )
 }
 
-export default Fighters;
+export default Players;
