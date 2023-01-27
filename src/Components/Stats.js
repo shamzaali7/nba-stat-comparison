@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import Players from '../players.json';
 
 function Stats(props){
@@ -20,6 +20,10 @@ function Stats(props){
     let colorfGP2= "red";
     let colorfG3p1= "red";
     let colorfG3p2= "red";
+    const [playerOneID, setPlayerOneID] = useState();
+    const [playerTwoID, setPlayerTwoID] = useState();
+    let playerNameOne;
+    let playerNameTwo;
 
     function changeColor1(){
         if (props.playerOneStats.pts > props.playerTwoStats.pts){
@@ -57,16 +61,15 @@ function Stats(props){
         }else{
             colorfG3p2= "green";
         }
-        
     }
-    let playerNameOne = props.playerOneName
-    let playerNameTwo = props.playerTwoName
-    let playerOneID = Players[`${playerNameOne}`].PlayerID
-    let playerTwoID = Players[`${playerNameTwo}`].PlayerID
-    changeColor1();
 
     useEffect(() => {
         props.handleCountCheck();
+        changeColor1();
+        playerNameOne = props.playerCase(props.playerOneName);
+        playerNameTwo = props.playerCase(props.playerTwoName);
+        setPlayerOneID(Players[`${playerNameOne}`].PlayerID);
+        setPlayerTwoID(Players[`${playerNameTwo}`].PlayerID);
     }, [])
 
     return(
@@ -74,7 +77,9 @@ function Stats(props){
             <div className="container-stats">
                 <div className="stats-one">
                     <p>{props.playerOneName.toUpperCase()}</p>
+                    {playerOneID && (
                     <img src={`https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${playerOneID}.png`} alt={playerNameOne}/>
+                    )}
                     <ul>
                         <li>
                             Points:  <span className={colorPts1}>{Math.round(props.playerOneStats.pts)}</span>

@@ -29,7 +29,8 @@ class App extends Component{
   }
 
   async getPlayerOneId(){
-    await axios.get(`https://www.balldontlie.io/api/v1/players?search=${this.state.playerOneName}`)
+    const playerName = this.playerCase(this.state.playerOneName);
+    await axios.get(`https://www.balldontlie.io/api/v1/players?search=${playerName}`)
     .then(async res => {
       await this.getPlayerOneStats(res.data.data[0].id);
       this.setState({countCheckOne: 1});
@@ -40,7 +41,8 @@ class App extends Component{
   }
 
   async getPlayerTwoId(){
-    await axios.get(`https://www.balldontlie.io/api/v1/players?search=${this.state.playerTwoName}`)
+    const playerName = this.playerCase(this.state.playerTwoName);
+    await axios.get(`https://www.balldontlie.io/api/v1/players?search=${playerName}`)
     .then(async res => {
       await this.getPlayerTwoStats(res.data.data[0].id);
       this.setState({countCheckTwo: 1});
@@ -74,9 +76,9 @@ class App extends Component{
     }
   }
 
-  handleSubmitOne(e){
+  async handleSubmitOne(e){
     e.preventDefault()
-    this.getPlayerOneId()
+    await this.getPlayerOneId()
   }
 
   handleChangeTwo(e){
@@ -87,14 +89,31 @@ class App extends Component{
     }
   }
 
-  handleSubmitTwo(e){
+  async handleSubmitTwo(e){
     e.preventDefault()
-    this.getPlayerTwoId()
+    await this.getPlayerTwoId()
   }
 
   handleCountCheck(){
     this.setState({countCheckOne: 0});
     this.setState({countCheckTwo: 0});
+  }
+
+  playerCase(name){
+    let p1 = [];
+    for(let i=0; i<name.length; i++){
+      if(i === 0){
+        p1.push(name[i].toUpperCase());
+      }else if(name[i] === " "){
+        p1.push(name[i])
+        p1.push(name[i+1].toUpperCase())
+        i++;
+      }else{
+      p1.push(name[i].toLowerCase());
+      }
+    }
+    const playerName = p1.join("");
+    return(playerName);
   }
 
   render(){
@@ -113,7 +132,7 @@ class App extends Component{
         <Footer/>
         <main>
           <Routes>
-            <Route path="/stats" element={<Stats playerOneName={this.state.playerOneName} playerTwoName={this.state.playerTwoName} playerOneStats={this.state.playerOneStats} playerTwoStats={this.state.playerTwoStats} handleCountCheck={this.handleCountCheck}/>}/>
+            <Route path="/stats" element={<Stats playerOneName={this.state.playerOneName} playerTwoName={this.state.playerTwoName} playerOneStats={this.state.playerOneStats} playerTwoStats={this.state.playerTwoStats} handleCountCheck={this.handleCountCheck} playerCase={this.playerCase}/>}/>
             <Route path="/" element={<Home/>}/>
             <Route path="/players" element={<Players countCheckOne={this.state.countCheckOne} countCheckTwo={this.state.countCheckTwo} playerOneName={this.state.playerOneName} playerTwoName={this.state.playerTwoName} playerOneStats={this.state.playerOneStats} handleChangeOne={this.handleChangeOne} handleChangeTwo={this.handleChangeTwo} handleSubmitOne={this.handleSubmitOne} handleSubmitTwo={this.handleSubmitTwo} handleCountCheck={this.handleCountCheck}/>}/>
             <Route path="/playerlist" element={<PlayerList />}/>
