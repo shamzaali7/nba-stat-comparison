@@ -2,9 +2,7 @@ import React from 'react';
 
 function Footer(){
     return(
-        <div className="wrapper-footer">
-            <p>Developed By: Hamza Ali</p>
-        </div>
+        <p className="wrapper-footer">Developed By: Hamza Ali</p>
     )
 }
 
