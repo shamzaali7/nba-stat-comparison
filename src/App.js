@@ -29,33 +29,41 @@ class App extends Component{
   }
 
   async getPlayerOneId(){
-    const playerName = this.playerCase(this.state.playerOneName);
-    await axios.get(`https://www.balldontlie.io/api/v1/players?search=${playerName}`)
-    .then(async res => {
-      await this.getPlayerOneStats(res.data.data[0].id);
-      this.setState({countCheckOne: 1});
-    })
-    .catch(error => {
-      alert("Unable to find player, please try again");
-    })
+    let playerName = this.playerCase(this.state.playerOneName);
+    if(playerName !== null){
+      await axios.get(`https://www.balldontlie.io/api/v1/players?search=${playerName}`)
+      .then(async res => {
+        await this.getPlayerOneStats(res.data.data[0].id);
+        this.setState({countCheckOne: 1});
+      })
+      .catch(() => {
+        alert("Unable to find player, please try again");
+      })
+    }else{
+      alert("Please enter the full name")
+    }
   }
 
   async getPlayerTwoId(){
-    const playerName = this.playerCase(this.state.playerTwoName);
-    await axios.get(`https://www.balldontlie.io/api/v1/players?search=${playerName}`)
-    .then(async res => {
-      await this.getPlayerTwoStats(res.data.data[0].id);
-      this.setState({countCheckTwo: 1});
-    })
-    .catch(error => {
-      alert("Unable to find player, please try again");
-    })
+    let playerName = this.playerCase(this.state.playerTwoName);
+    if(playerName !== null){
+      await axios.get(`https://www.balldontlie.io/api/v1/players?search=${playerName}`)
+      .then(async res => {
+        await this.getPlayerTwoStats(res.data.data[0].id);
+        this.setState({countCheckTwo: 1});
+      })
+      .catch(() => {
+        alert("Unable to find player, please try again");
+      })
+    }else{
+      alert("Please enter the full name")
+    }
   }
 
   async getPlayerOneStats(playerOneId){
     await axios.get(`https://www.balldontlie.io/api/v1/season_averages?season=2022&player_ids[]=${playerOneId}`)
     .then(res => {
-      this.setState({playerOneStats: res.data.data[0]});
+        this.setState({playerOneStats: res.data.data[0]});
     })
     .catch(error => {console.log(error)})
   }
@@ -101,16 +109,21 @@ class App extends Component{
 
   playerCase(name){
     let p1 = [];
+    let counter = 0;
     for(let i=0; i<name.length; i++){
       if(i === 0){
         p1.push(name[i].toUpperCase());
       }else if(name[i] === " "){
-        p1.push(name[i])
-        p1.push(name[i+1].toUpperCase())
+        counter++;
+        p1.push(name[i]);
+        p1.push(name[i+1].toUpperCase());
         i++;
       }else{
       p1.push(name[i].toLowerCase());
       }
+    }
+    if(counter === 0){
+      return(null);
     }
     const playerName = p1.join("");
     return(playerName);
