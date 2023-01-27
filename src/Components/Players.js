@@ -29,11 +29,13 @@ function Players(props){
                     </form>
                 </div>
             </div>
-            <div className="button-continue">
+            {props.countCheckOne + props.countCheckTwo === 2 &&
+            (<div className="button-continue">
                 <Link to="/stats">
                     <button>Click here to continue</button>
                 </Link>
             </div>
+            )}
         </div>
     )
 }
