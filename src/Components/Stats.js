@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Players from '../players.json';
 
 function Stats(props){
@@ -64,6 +64,10 @@ function Stats(props){
     let playerOneID = Players[`${playerNameOne}`].PlayerID
     let playerTwoID = Players[`${playerNameTwo}`].PlayerID
     changeColor1();
+
+    useEffect(() => {
+        props.handleCountCheck();
+    }, [])
 
     return(
         <div><h1 className="stats-title">Season Averages</h1>

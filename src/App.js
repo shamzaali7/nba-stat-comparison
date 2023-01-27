@@ -25,45 +25,41 @@ class App extends Component{
     this.handleSubmitOne = this.handleSubmitOne.bind(this)
     this.handleChangeTwo = this.handleChangeTwo.bind(this)
     this.handleSubmitTwo = this.handleSubmitTwo.bind(this)
+    this.handleCountCheck = this.handleCountCheck.bind(this)
   }
 
-  getPlayerOneId(){
-    axios.get(`https://www.balldontlie.io/api/v1/players?search=${this.state.playerOneName}`)
-    .then(res => {
+  async getPlayerOneId(){
+    await axios.get(`https://www.balldontlie.io/api/v1/players?search=${this.state.playerOneName}`)
+    .then(async res => {
       this.getPlayerOneStats(res.data.data[0].id);
-      this.state.countCheckOne++;
+      this.setState({countCheckOne: 1});
     })
     .catch(error => {console.log(error)})
   }
 
-  getPlayerTwoId(){
-    axios.get(`https://www.balldontlie.io/api/v1/players?search=${this.state.playerTwoName}`)
-    .then(res => {
+  async getPlayerTwoId(){
+    await axios.get(`https://www.balldontlie.io/api/v1/players?search=${this.state.playerTwoName}`)
+    .then(async res => {
       this.getPlayerTwoStats(res.data.data[0].id);
-      this.state.countCheckTwo++;
+      this.setState({countCheckTwo: 1});
     })
     .catch(error => {console.log(error)})
   }
 
-  getPlayerOneStats(playerOneId){
-    axios.get(`https://www.balldontlie.io/api/v1/season_averages?season=2022&player_ids[]=${playerOneId}`)
+  async getPlayerOneStats(playerOneId){
+    await axios.get(`https://www.balldontlie.io/api/v1/season_averages?season=2022&player_ids[]=${playerOneId}`)
     .then(res => {
       this.setState({playerOneStats: res.data.data[0]});
     })
     .catch(error => {console.log(error)})
   }
 
-  getPlayerTwoStats(playerTwoId){
-    axios.get(`https://www.balldontlie.io/api/v1/season_averages?season=2022&player_ids[]=${playerTwoId}`)
+  async getPlayerTwoStats(playerTwoId){
+    await axios.get(`https://www.balldontlie.io/api/v1/season_averages?season=2022&player_ids[]=${playerTwoId}`)
     .then(res => {
       this.setState({playerTwoStats: res.data.data[0]})
     })
     .catch(error => {console.log(error)})
-  }
-
-  componentDidMount(){
-    this.getPlayerOneId();
-    this.getPlayerTwoId();
   }
 
   handleChangeOne(e){
@@ -92,6 +88,11 @@ class App extends Component{
     this.getPlayerTwoId()
   }
 
+  handleCountCheck(){
+    this.setState({countCheckOne: 0});
+    this.setState({countCheckTwo: 0});
+  }
+
   render(){
     return (
       <div className="all">
@@ -108,9 +109,9 @@ class App extends Component{
         <Footer/>
         <main>
           <Routes>
-            <Route path="/stats" element={<Stats playerOneName={this.state.playerOneName} playerTwoName={this.state.playerTwoName} playerOneStats={this.state.playerOneStats} playerTwoStats={this.state.playerTwoStats}/>}/>
+            <Route path="/stats" element={<Stats playerOneName={this.state.playerOneName} playerTwoName={this.state.playerTwoName} playerOneStats={this.state.playerOneStats} playerTwoStats={this.state.playerTwoStats} handleCountCheck={this.handleCountCheck}/>}/>
             <Route path="/" element={<Home/>}/>
-            <Route path="/fighters" element={<Fighters countCheckOne={this.state.countCheckOne} countCheckTwo={this.state.countCheckTwo} playerOneName={this.state.playerOneName} playerTwoName={this.state.playerTwoName} playerOneStats={this.state.playerOneStats} handleChangeOne={this.handleChangeOne} handleChangeTwo={this.handleChangeTwo} handleSubmitOne={this.handleSubmitOne} handleSubmitTwo={this.handleSubmitTwo}/>}/>
+            <Route path="/fighters" element={<Fighters countCheckOne={this.state.countCheckOne} countCheckTwo={this.state.countCheckTwo} playerOneName={this.state.playerOneName} playerTwoName={this.state.playerTwoName} playerOneStats={this.state.playerOneStats} handleChangeOne={this.handleChangeOne} handleChangeTwo={this.handleChangeTwo} handleSubmitOne={this.handleSubmitOne} handleSubmitTwo={this.handleSubmitTwo} handleCountCheck={this.handleCountCheck}/>}/>
             <Route path="/playerlist" element={<PlayerList />}/>
           </Routes>
         </main>
