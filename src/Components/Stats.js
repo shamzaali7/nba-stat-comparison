@@ -22,8 +22,6 @@ function Stats(props){
     let colorfG3p2= "red";
     const [playerOneID, setPlayerOneID] = useState();
     const [playerTwoID, setPlayerTwoID] = useState();
-    let playerNameOne;
-    let playerNameTwo;
 
     function changeColor1(){
         if (props.playerOneStats.pts > props.playerTwoStats.pts){
@@ -63,22 +61,20 @@ function Stats(props){
         }
     }
 
+    
     useEffect(() => {
         props.handleCountCheck();
-        changeColor1();
-        playerNameOne = props.playerCase(props.playerOneName);
-        playerNameTwo = props.playerCase(props.playerTwoName);
-        setPlayerOneID(Players[`${playerNameOne}`].PlayerID);
-        setPlayerTwoID(Players[`${playerNameTwo}`].PlayerID);
+        setPlayerOneID(Players[`${props.playerOneFullName}`].PlayerID);
+        setPlayerTwoID(Players[`${props.playerTwoFullName}`].PlayerID);
     }, [])
-
+    changeColor1();
     return(
         <div><h1 className="stats-title">Season Averages</h1>
             <div className="container-stats">
                 <div className="stats-one">
-                    <p>{props.playerOneName.toUpperCase()}</p>
+                    <p>{props.playerOneFullName.toUpperCase()}</p>
                     {playerOneID && (
-                    <img src={`https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${playerOneID}.png`} alt={playerNameOne}/>
+                    <img src={`https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${playerOneID}.png`} alt={props.playerOneFullName}/>
                     )}
                     <ul>
                         <li>
@@ -105,8 +101,8 @@ function Stats(props){
                     </ul>
                 </div>
                 <div className="stats-two">
-                    <p>{props.playerTwoName.toUpperCase()}</p>
-                    <img src={`https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${playerTwoID}.png`} alt={playerNameTwo}/>
+                    <p>{props.playerTwoFullName.toUpperCase()}</p>
+                    <img src={`https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${playerTwoID}.png`} alt={props.playerTwoFullName}/>
                     <ul>
                         <li>
                             Points: <span className={colorPts2}>{Math.round(props.playerTwoStats.pts)}</span>

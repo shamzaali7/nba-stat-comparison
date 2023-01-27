@@ -15,6 +15,8 @@ class App extends Component{
     this.state={
       playerOneName: null,
       playerTwoName: null,
+      playerOneFullName: null,
+      playerTwoFullName: null,
       playerOneStats: {},
       playerTwoStats: {},
       countCheckOne: 0,
@@ -33,8 +35,13 @@ class App extends Component{
     if(playerName !== null){
       await axios.get(`https://www.balldontlie.io/api/v1/players?search=${playerName}`)
       .then(async res => {
-        await this.getPlayerOneStats(res.data.data[0].id);
-        this.setState({countCheckOne: 1});
+        if(res.data.data.length > 1){
+          alert("Please be more specific");
+        }else{
+          this.setState({playerOneFullName: (res.data.data[0].first_name + " " + res.data.data[0].last_name)});
+          await this.getPlayerOneStats(res.data.data[0].id);
+          this.setState({countCheckOne: 1});
+        }
       })
       .catch(() => {
         alert("Unable to find player, please try again");
@@ -49,8 +56,13 @@ class App extends Component{
     if(playerName !== null){
       await axios.get(`https://www.balldontlie.io/api/v1/players?search=${playerName}`)
       .then(async res => {
-        await this.getPlayerTwoStats(res.data.data[0].id);
-        this.setState({countCheckTwo: 1});
+        if(res.data.data.length > 1){
+          alert("Please be more specific");
+        }else{
+          this.setState({playerTwoFullName: (res.data.data[0].first_name + " " + res.data.data[0].last_name)});
+          await this.getPlayerTwoStats(res.data.data[0].id);
+          this.setState({countCheckTwo: 1});
+        }
       })
       .catch(() => {
         alert("Unable to find player, please try again");
@@ -145,7 +157,7 @@ class App extends Component{
         <Footer/>
         <main>
           <Routes>
-            <Route path="/stats" element={<Stats playerOneName={this.state.playerOneName} playerTwoName={this.state.playerTwoName} playerOneStats={this.state.playerOneStats} playerTwoStats={this.state.playerTwoStats} handleCountCheck={this.handleCountCheck} playerCase={this.playerCase}/>}/>
+            <Route path="/stats" element={<Stats playerOneName={this.state.playerOneName} playerTwoName={this.state.playerTwoName} playerOneFullName={this.state.playerOneFullName} playerTwoFullName={this.state.playerTwoFullName} playerOneStats={this.state.playerOneStats} playerTwoStats={this.state.playerTwoStats} handleCountCheck={this.handleCountCheck}/>}/>
             <Route path="/" element={<Home/>}/>
             <Route path="/players" element={<Players countCheckOne={this.state.countCheckOne} countCheckTwo={this.state.countCheckTwo} playerOneName={this.state.playerOneName} playerTwoName={this.state.playerTwoName} playerOneStats={this.state.playerOneStats} handleChangeOne={this.handleChangeOne} handleChangeTwo={this.handleChangeTwo} handleSubmitOne={this.handleSubmitOne} handleSubmitTwo={this.handleSubmitTwo} handleCountCheck={this.handleCountCheck}/>}/>
             <Route path="/playerlist" element={<PlayerList />}/>
