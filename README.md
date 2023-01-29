@@ -67,6 +67,3 @@ Total | N/A | 15hrs | 20hrs | 20hrs
 
 #### Error: {props.playerOneName &&}
 #### Resolution: Replaced playerOneName with a counter to see if a player name was submitted and show a check mark.
-
-# Youtube link
-[Click Here](https://www.youtube.com/watch?v=3N7PBuEtg9w&ab_channel=HamzaAli)
