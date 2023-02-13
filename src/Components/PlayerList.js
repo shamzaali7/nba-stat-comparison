@@ -48,7 +48,7 @@ function PlayerList(){
                 </div>
                 <div className="player-top20">
                 <img src={`https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/1626164.png`} alt="Devin booker"/>
-                    <p>Devin booker</p>
+                    <p>Devin Booker</p>
                 </div>
                 <div className="player-top20">
                 <img src={`https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/202710.png`} alt="Jimmy Butler"/>
