@@ -30,63 +30,67 @@ class App extends Component{
     this.handleCountCheck = this.handleCountCheck.bind(this)
   }
 
-  async getPlayerOneId(){
+  async getPlayerOneId() {
     let playerName = this.playerCase(this.state.playerOneName);
-    if(playerName !== null){
-      await axios.get(`https://www.balldontlie.io/api/v1/players?search=${playerName}`)
+    if(playerName !== null) {
+      const apiKey = process.env.REACT_APP_NBA_API_KEY;
+      await axios.get(`https://api.balldontlie.io/v1/players?search=${playerName}`, { 
+        headers: { "Authorization": `${apiKey}` } 
+      })
       .then(async res => {
-        if(res.data.data.length > 1){
-          alert("Please be more specific");
-        }else{
-          this.setState({playerOneFullName: (res.data.data[0].first_name + " " + res.data.data[0].last_name)});
-          await this.getPlayerOneStats(res.data.data[0].id);
-          this.setState({countCheckOne: 1});
-        }
+        this.setState({playerOneFullName: (res.data.data[0].first_name + " " + res.data.data[0].last_name)});
+        await this.getPlayerOneStats(res.data.data[0].id, apiKey);
+        this.setState({countCheckOne: 1});
       })
-      .catch(() => {
+      .catch(() => {     
         alert("Unable to find player, please try again");
-      })
-    }else{
-      alert("Please enter the full name")
+      });
+    } else {
+      alert("Please enter the full name");
     }
   }
-
-  async getPlayerTwoId(){
+  
+  async getPlayerTwoId() {
     let playerName = this.playerCase(this.state.playerTwoName);
-    if(playerName !== null){
-      await axios.get(`https://www.balldontlie.io/api/v1/players?search=${playerName}`)
+    if(playerName !== null) {
+      const apiKey = process.env.REACT_APP_NBA_API_KEY;
+      await axios.get(`https://api.balldontlie.io/v1/players?search=${playerName}`, { 
+        headers: { "Authorization": `${apiKey}` } 
+      })
       .then(async res => {
-        if(res.data.data.length > 1){
-          alert("Please be more specific");
-        }else{
-          this.setState({playerTwoFullName: (res.data.data[0].first_name + " " + res.data.data[0].last_name)});
-          await this.getPlayerTwoStats(res.data.data[0].id);
-          this.setState({countCheckTwo: 1});
-        }
+        this.setState({playerTwoFullName: (res.data.data[0].first_name + " " + res.data.data[0].last_name)});
+        await this.getPlayerTwoStats(res.data.data[0].id, apiKey);
+        this.setState({countCheckTwo: 1});
       })
       .catch(() => {
         alert("Unable to find player, please try again");
-      })
-    }else{
-      alert("Please enter the full name")
+      });
+    } else {
+      alert("Please enter the full name");
     }
   }
+  
 
-  async getPlayerOneStats(playerOneId){
-    await axios.get(`https://www.balldontlie.io/api/v1/season_averages?season=2022&player_ids[]=${playerOneId}`)
+  async getPlayerOneStats(playerOneId, apiKey) {
+    await axios.get(`https://api.balldontlie.io/v1/season_averages?season=2022&player_id=${playerOneId}`, 
+      { headers: { 'Authorization': apiKey } 
+    })
     .then(res => {
         this.setState({playerOneStats: res.data.data[0]});
     })
-    .catch(error => {console.log(error)})
+    .catch(error => {console.log(error)});
   }
-
-  async getPlayerTwoStats(playerTwoId){
-    await axios.get(`https://www.balldontlie.io/api/v1/season_averages?season=2022&player_ids[]=${playerTwoId}`)
-    .then(res => {
-      this.setState({playerTwoStats: res.data.data[0]})
+  
+  async getPlayerTwoStats(playerTwoId, apiKey) {
+    await axios.get(`https://api.balldontlie.io/v1/season_averages?season=2022&player_id=${playerTwoId}`, { 
+      headers: { "Authorization": `${apiKey}` } 
     })
-    .catch(error => {console.log(error)})
+    .then(res => {
+      this.setState({playerTwoStats: res.data.data[0]});
+    })
+    .catch(error => {console.log(error)});
   }
+  
 
   handleChangeOne(e){
     if(e.target.value.length > 0){
@@ -121,25 +125,23 @@ class App extends Component{
 
   playerCase(name){
     let p1 = [];
-    let counter = 0;
     for(let i=0; i<name.length; i++){
       if(i === 0){
         p1.push(name[i].toUpperCase());
-      }else if(name[i] === " "){
-        counter++;
-        p1.push(name[i]);
-        p1.push(name[i+1].toUpperCase());
-        i++;
       }else{
-      p1.push(name[i].toLowerCase());
+        p1.push(name[i].toLowerCase());
       }
-    }
-    if(counter === 0){
-      return(null);
     }
     const playerName = p1.join("");
     return(playerName);
   }
+
+  // else if(name[i] === " "){
+  //   counter++;
+  //   p1.push(name[i]);
+  //   p1.push(name[i+1].toUpperCase());
+  //   i++;
+  // }
 
   render(){
     return (
@@ -175,3 +177,5 @@ export default App;
 // https://stackoverflow.com/questions/51357334/how-would-i-round-a-number-eg-2-12-to-the-nearest-tenth-2-1-in-js
 // https://medium.com/@avinash.sarguru/getting-nba-player-pictures-for-you-application-6106d5530943
 // https://www.youtube.com/watch?v=LSRNmhLS76o&t=1s&ab_channel=CodeCommerce
+
+
