@@ -136,13 +136,6 @@ class App extends Component{
     return(playerName);
   }
 
-  // else if(name[i] === " "){
-  //   counter++;
-  //   p1.push(name[i]);
-  //   p1.push(name[i+1].toUpperCase());
-  //   i++;
-  // }
-
   render(){
     return (
       <div className="all">
