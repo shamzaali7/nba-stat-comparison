@@ -69,7 +69,6 @@ class App extends Component{
       alert("Please enter the full name");
     }
   }
-  
 
   async getPlayerOneStats(playerOneId, apiKey) {
     await axios.get(`https://api.balldontlie.io/v1/season_averages?season=2022&player_id=${playerOneId}`, 
