@@ -2,10 +2,28 @@ import React, {useEffect, useState} from 'react';
 import Players from '../players.json';
 
 function Stats(props){
-    const fGP1 = (props.playerOneStats.fgm/props.playerOneStats.fga*100).toFixed(1);
-    const fGP2 = (props.playerTwoStats.fgm/props.playerTwoStats.fga*100).toFixed(1);
-    const fG3p1 = ((props.playerOneStats.fg3m/props.playerOneStats.fg3a*100).toFixed(1));
-    const fG3p2 = ((props.playerTwoStats.fg3m/props.playerTwoStats.fg3a*100).toFixed(1));
+    // Helper function to safely get numeric values
+    const safeValue = (value, defaultValue = 0) => {
+        return value !== null && value !== undefined && !isNaN(value) ? value : defaultValue;
+    };
+
+    // Calculate percentages with null/undefined checks
+    const fGP1 = props.playerOneStats.fga && props.playerOneStats.fga > 0 
+        ? (safeValue(props.playerOneStats.fgm) / props.playerOneStats.fga * 100).toFixed(1)
+        : "0.0";
+    
+    const fGP2 = props.playerTwoStats.fga && props.playerTwoStats.fga > 0
+        ? (safeValue(props.playerTwoStats.fgm) / props.playerTwoStats.fga * 100).toFixed(1)
+        : "0.0";
+    
+    const fG3p1 = props.playerOneStats.fg3a && props.playerOneStats.fg3a > 0
+        ? (safeValue(props.playerOneStats.fg3m) / props.playerOneStats.fg3a * 100).toFixed(1)
+        : "0.0";
+    
+    const fG3p2 = props.playerTwoStats.fg3a && props.playerTwoStats.fg3a > 0
+        ? (safeValue(props.playerTwoStats.fg3m) / props.playerTwoStats.fg3a * 100).toFixed(1)
+        : "0.0";
+
     let colorPts1= "red";
     let colorPts2= "red";
     let colorReb1= "red";
@@ -20,112 +38,120 @@ function Stats(props){
     let colorfGP2= "red";
     let colorfG3p1= "red";
     let colorfG3p2= "red";
+    
     const [playerOneID, setPlayerOneID] = useState();
     const [playerTwoID, setPlayerTwoID] = useState();
 
     function changeColor1(){
-        if (props.playerOneStats.pts > props.playerTwoStats.pts){
+        if (safeValue(props.playerOneStats.pts) > safeValue(props.playerTwoStats.pts)){
             colorPts1 = "green";
-        }else{
+        }else if (safeValue(props.playerOneStats.pts) < safeValue(props.playerTwoStats.pts)){
             colorPts2 = "green";
         }
-        if (props.playerOneStats.reb > props.playerTwoStats.reb){
+        
+        if (safeValue(props.playerOneStats.reb) > safeValue(props.playerTwoStats.reb)){
             colorReb1 = "green";
-        }else{
+        }else if (safeValue(props.playerOneStats.reb) < safeValue(props.playerTwoStats.reb)){
             colorReb2 = "green";
         }
-        if (props.playerOneStats.ast > props.playerTwoStats.ast){
+        
+        if (safeValue(props.playerOneStats.ast) > safeValue(props.playerTwoStats.ast)){
             colorAst1 = "green";
-        }else{
+        }else if (safeValue(props.playerOneStats.ast) < safeValue(props.playerTwoStats.ast)){
             colorAst2 = "green";
         }
-        if (props.playerOneStats.blk > props.playerTwoStats.blk){
+        
+        if (safeValue(props.playerOneStats.blk) > safeValue(props.playerTwoStats.blk)){
             colorBlk1 = "green";
-        }else{
+        }else if (safeValue(props.playerOneStats.blk) < safeValue(props.playerTwoStats.blk)){
             colorBlk2 = "green";
         }
-        if (props.playerOneStats.stl > props.playerTwoStats.stl){
+        
+        if (safeValue(props.playerOneStats.stl) > safeValue(props.playerTwoStats.stl)){
             colorStl1 = "green";
-        }else{
+        }else if (safeValue(props.playerOneStats.stl) < safeValue(props.playerTwoStats.stl)){
             colorStl2 = "green";
         }
-        if (fGP1 > fGP2){
+        
+        if (parseFloat(fGP1) > parseFloat(fGP2)){
             colorfGP1 = "green";
-        }else{
+        }else if (parseFloat(fGP1) < parseFloat(fGP2)){
             colorfGP2 = "green";
         }
-        if (fG3p1 > fG3p2){
+        
+        if (parseFloat(fG3p1) > parseFloat(fG3p2)){
             colorfG3p1 = "green";
-        }else{
+        }else if (parseFloat(fG3p1) < parseFloat(fG3p2)){
             colorfG3p2= "green";
         }
     }
 
-    
     useEffect(() => {
         props.handleCountCheck();
-        setPlayerOneID(Players[`${props.playerOneFullName}`].PlayerID);
-        setPlayerTwoID(Players[`${props.playerTwoFullName}`].PlayerID);
+        if (props.playerOneFullName && Players[props.playerOneFullName]) {
+            setPlayerOneID(Players[props.playerOneFullName].PlayerID);
+        }
+        if (props.playerTwoFullName && Players[props.playerTwoFullName]) {
+            setPlayerTwoID(Players[props.playerTwoFullName].PlayerID);
+        }
     }, [])
+
     changeColor1();
+
+    // Check if stats are available
+    const hasPlayerOneStats = props.playerOneStats && Object.keys(props.playerOneStats).length > 0;
+    const hasPlayerTwoStats = props.playerTwoStats && Object.keys(props.playerTwoStats).length > 0;
+
     return(
-        <div><h1 className="stats-title">Season Averages</h1>
+        <div>
+            <h1 className="stats-title">Season Averages</h1>
+            {props.playerOneStats.season && (
+                <p style={{textAlign: 'center'}}>Season: {props.playerOneStats.season}</p>
+            )}
             <div className="container-stats">
                 <div className="stats-one">
-                    <p>{props.playerOneFullName.toUpperCase()}</p>
+                    <p>{props.playerOneFullName.toUpperCase() || "Player One"}</p>
                     {playerOneID && (
-                    <img src={`https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${playerOneID}.png`} alt={props.playerOneFullName}/>
+                        <img src={`https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${playerOneID}.png`} 
+                             alt={props.playerOneFullName}
+                             onError={(e) => {e.target.src = 'https://via.placeholder.com/260x190?text=No+Image'}}/>
                     )}
-                    <ul>
-                        <li>
-                            Points:  <span className={colorPts1}>{Math.round(props.playerOneStats.pts)}</span>
-                        </li>
-                        <li>
-                            Rebounds: <span className={colorReb1}>{Math.round(props.playerOneStats.reb)}</span>
-                        </li>
-                        <li>
-                            Assists: <span className={colorAst1}>{Math.round(props.playerOneStats.ast)}</span>
-                        </li>
-                        <li>
-                            Blocks: <span className={colorBlk1}>{(props.playerOneStats.blk)}</span>
-                        </li>
-                        <li>
-                            Steals: <span className={colorStl1}>{props.playerOneStats.stl}</span>
-                        </li>
-                        <li>
-                            Field-goal percentage: <span className={colorfGP1}>{fGP1}</span>%
-                        </li>
-                        <li>
-                            3-pt percentage: <span className={colorfG3p1}>{fG3p1}</span>%
-                        </li>
-                    </ul>
+                    {hasPlayerOneStats ? (
+                        <ul>
+                            <li>Points: <span className={colorPts1}>{safeValue(props.playerOneStats.pts).toFixed(1)}</span></li>
+                            <li>Rebounds: <span className={colorReb1}>{safeValue(props.playerOneStats.reb).toFixed(1)}</span></li>
+                            <li>Assists: <span className={colorAst1}>{safeValue(props.playerOneStats.ast).toFixed(1)}</span></li>
+                            <li>Blocks: <span className={colorBlk1}>{safeValue(props.playerOneStats.blk).toFixed(1)}</span></li>
+                            <li>Steals: <span className={colorStl1}>{safeValue(props.playerOneStats.stl).toFixed(1)}</span></li>
+                            <li>Field-goal percentage: <span className={colorfGP1}>{fGP1}</span>%</li>
+                            <li>3-pt percentage: <span className={colorfG3p1}>{fG3p1}</span>%</li>
+                            <li>Games played: {safeValue(props.playerOneStats.games_played, 'N/A')}</li>
+                        </ul>
+                    ) : (
+                        <p>No stats available</p>
+                    )}
                 </div>
                 <div className="stats-two">
-                    <p>{props.playerTwoFullName.toUpperCase()}</p>
-                    <img src={`https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${playerTwoID}.png`} alt={props.playerTwoFullName}/>
-                    <ul>
-                        <li>
-                            Points: <span className={colorPts2}>{Math.round(props.playerTwoStats.pts)}</span>
-                        </li>
-                        <li>
-                            Rebounds: <span className={colorReb2}>{Math.round(props.playerTwoStats.reb)}</span>
-                        </li>
-                        <li>
-                            Assists: <span className={colorAst2}>{Math.round(props.playerTwoStats.ast)}</span>
-                        </li>
-                        <li>
-                            Blocks: <span className={colorBlk2}>{(props.playerTwoStats.blk)}</span>
-                        </li>
-                        <li>
-                            Steals: <span className={colorStl2}>{props.playerTwoStats.stl}</span>
-                        </li>
-                        <li>
-                            Field-goal percentage: <span className={colorfGP2}>{fGP2}</span>%
-                        </li>
-                        <li>
-                            3-pt percentage: <span className={colorfG3p2}>{fG3p2}</span>%
-                        </li>
-                    </ul>
+                    <p>{props.playerTwoFullName.toUpperCase() || "Player Two"}</p>
+                    {playerTwoID && (
+                        <img src={`https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${playerTwoID}.png`} 
+                             alt={props.playerTwoFullName}
+                             onError={(e) => {e.target.src = 'https://via.placeholder.com/260x190?text=No+Image'}}/>
+                    )}
+                    {hasPlayerTwoStats ? (
+                        <ul>
+                            <li>Points: <span className={colorPts2}>{safeValue(props.playerTwoStats.pts).toFixed(1)}</span></li>
+                            <li>Rebounds: <span className={colorReb2}>{safeValue(props.playerTwoStats.reb).toFixed(1)}</span></li>
+                            <li>Assists: <span className={colorAst2}>{safeValue(props.playerTwoStats.ast).toFixed(1)}</span></li>
+                            <li>Blocks: <span className={colorBlk2}>{safeValue(props.playerTwoStats.blk).toFixed(1)}</span></li>
+                            <li>Steals: <span className={colorStl2}>{safeValue(props.playerTwoStats.stl).toFixed(1)}</span></li>
+                            <li>Field-goal percentage: <span className={colorfGP2}>{fGP2}</span>%</li>
+                            <li>3-pt percentage: <span className={colorfG3p2}>{fG3p2}</span>%</li>
+                            <li>Games played: {safeValue(props.playerTwoStats.games_played, 'N/A')}</li>
+                        </ul>
+                    ) : (
+                        <p>No stats available</p>
+                    )}
                 </div>
             </div>
         </div>
