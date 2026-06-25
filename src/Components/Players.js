@@ -143,14 +143,14 @@ function Players() {
     setComparing(true);
 
     const [res1, res2] = await Promise.all([
-      getPlayerSeasonAverages(p1.id),
-      getPlayerSeasonAverages(p2.id),
+      getPlayerSeasonAverages(p1),
+      getPlayerSeasonAverages(p2),
     ]);
 
     setComparing(false);
 
     if (!res1 && !res2) {
-      setError('Could not load stats for either player. Check your API key in .env.');
+      setError('Could not load stats for either player. They may not be in our player database.');
       return;
     }
 

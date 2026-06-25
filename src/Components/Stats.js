@@ -1,15 +1,6 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { getPlayerHeadshotUrl } from '../services/nbaApi';
-import PlayersJson from '../players.json';
-import { PLAYER_NBA_ID_MAP } from '../data/topPlayers';
-
-function getNbaId(first, last) {
-  const full = `${first} ${last}`;
-  if (PLAYER_NBA_ID_MAP[full]) return PLAYER_NBA_ID_MAP[full];
-  if (PlayersJson[full]) return PlayersJson[full].PlayerID;
-  return null;
-}
+import { getPlayerHeadshotUrl, getNbaId } from '../services/nbaApi';
 
 function fmt(val, decimals = 1) {
   if (val === null || val === undefined || isNaN(val)) return '—';
