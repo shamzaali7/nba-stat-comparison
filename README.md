@@ -1,69 +1,95 @@
-# Project Description
-- The function of this app is to allow NBA fans to search for their favorite players and compare their current season stats with other players with a similiar caliber. It is oriented for everyone but is specifically a useful source for people that play fantasy basketball and need updated stats.
+# NBA Stat Comparison
 
-# Project Links
-- [Github Repo](https://github.com/shamzaali7/nba-stat-comparison)
-- [Deployed Site](https://nba-stat-comparison-gkoi.vercel.app/)
+A professional React web app for comparing NBA player season averages head-to-head. Search any active player, pull their latest stats, and compare them side by side with visual stat bars and winner highlighting.
 
-# Wireframes & React Component Hierarchy
-- [Wireframes](https://whimsical.com/project-2-basketball-AiSRB8yEHakkXUDv4VLWyn)
-- [React Architecture](src/Assets/ReactComponentHierarchy.jpg)
+**Repo:** [github.com/shamzaali7/nba-stat-comparison](https://github.com/shamzaali7/nba-stat-comparison)  
+**Live site:** [nba-stat-comparison-gkoi.vercel.app](https://nba-stat-comparison-gkoi.vercel.app/)
 
-# MVP/PostMVP
-- MVP for this website consists of a useable "compare players" page that allows the user to input two of their preferred players and be redirected to a stats page that provides them with a comparison of the current season averages of the two players.
+---
 
-- Post MVP is the players list page that provides the users with a current top 20 players list as well as a link to all current NBA players. 
+## Features
 
-### MVP
-- Grab information from an NBA API through a fetch request with axios
-- Provide the user with an input field to access the API data
-- Take that data and output the values of the player requested by the user
+- **Live player search** — autocomplete powered by the BallDontLie API; no need to know exact spellings
+- **Season averages comparison** — PTS, REB, AST, STL, BLK, TOV, FG%, 3P%, FT%, and minutes
+- **Visual stat bars** — orange/blue bars show relative performance at a glance; winner highlighted in orange
+- **Top Players page** — curated grid of 24 current NBA stars (2024–25 season) with NBA CDN headshots; click any card to pre-fill the comparison
+- **Responsive dark theme** — Barlow Condensed + Inter typography, full CSS variable system
 
-### Post MVP
-- Use another NBA API to grab player ID's
-- Interpolate user ID's in the url of a png website to access player pictures
-- Print pictures of the selected players along with the stats
+---
 
-# Components
+## Tech Stack
 
-| Components  | Description                                                                                 |
-|-------------|:-------------------------------------------------------------------------------------------:|
-| App         | Contains the main functions and API as well as the Router and its components and the nav bar|
-| Fighter     | Shows two form inputs that interact with the user                                           |
-| Stats       | Renders multiple stat values of the selected players and their headshots                    |
-| PlayerList  | Provides a set of the current top 20 NBA players                                            |
-| Home        | Has a video embedded in the background showing a basketball clip                            |
-| Header      | Retains the title of the webpage that is rendered on all pages                              |
-| Footer      | Retains a rights statement that is rendered on all pages                                    |
+- **React 18** (functional components + hooks)
+- **React Router v6** — comparison state passed via router navigation state, no prop drilling
+- **Axios** — all API calls centralized in `src/services/nbaApi.js`
+- **BallDontLie API v1** — player search and season averages
+- **NBA CDN** — player headshots via official `cdn.nba.com` URLs
 
-# Time Frames
+---
 
-Component | Priority | Estimated Time | Time Invested | Actual Time
----- | ---- | ---- | ---- | ----
-Creating Components | H | 1hr | 2hrs | 2hrs   
-Setting up + Initializing API | H | 4hrs | 6hrs | 6hrs
-Making links and lining routes | M | 1hr | 2hrs | 2hrs
-Adding Form and passing its changes | M | 3hrs | 3hrs | 3hrs
-Passing state and updating stats component | H | 2hrs | 3hrs | 3hrs
-Retrieving and implementing new API with separate url | H | 4hrs | 4hrs | 4hrs
-Total | N/A | 15hrs | 20hrs | 20hrs
+## Getting Started
 
-# Additional Libraries
-- Axios was used to assist the import of API's onto the code
+### Prerequisites
 
-# Code Snippet
-[Personal favorite](src/Assets/Code-Snippet.jpg)
+- Node.js ≥ 16
+- A free BallDontLie API key — sign up at [balldontlie.io](https://www.balldontlie.io)
 
-# Issues and Resolutions
+### Setup
 
-#### Error: I looked around everywhere for an API that contains NBA player headshots but didn't manage to find any. I came across an article that had a url for nba player headshots based on player ID's but couldnt use that because the NBA api they were using to get the player pictures had a blocked CORS policy. 
-#### Resolution: I searched deep and found an nba api client that could be installed through the terminal. Within that API was player ID's in a json file. With the url from the previous website and the newly obtained ID's, I was finally able to retrieve all of the player headshots.
+```bash
+git clone https://github.com/shamzaali7/nba-stat-comparison.git
+cd nba-stat-comparison
+npm install
+```
 
-#### Error: Cannot read properties of undefined reading State
-#### Resolution: Was supposed to use props (accidental)
+Create a `.env` file in the project root:
 
-#### Error: Cannot read properties of undefined reading PlayerID, Syntax error for calling object wihtin object
-#### Resolution: Had to put brackets and back quotes around the players name which was being interpolated
+```
+REACT_APP_NBA_API_KEY=your_api_key_here
+```
 
-#### Error: {props.playerOneName &&}
-#### Resolution: Replaced playerOneName with a counter to see if a player name was submitted and show a check mark.
+```bash
+npm start
+```
+
+---
+
+## Project Structure
+
+```
+src/
+├── services/
+│   └── nbaApi.js           # Centralized API layer (search, season averages)
+├── data/
+│   └── topPlayers.js       # Curated top-player list with NBA IDs for headshots
+├── Components/
+│   ├── Header.js            # Fixed navbar with active-link highlighting
+│   ├── Footer.js
+│   ├── Home.js              # Hero page — video background + feature cards
+│   ├── Players.js           # Dual autocomplete search + compare trigger
+│   ├── Stats.js             # Side-by-side stat comparison with visual bars
+│   ├── PlayerList.js        # Top players grid, clickable to pre-fill compare
+│   └── PlayerSelectionModal.js
+├── Assets/
+│   └── AnkleBreaker.mp4
+├── players.json             # NBA player ID lookup for headshots
+├── index.css                # Global dark theme + all component styles
+└── App.js                   # Router setup
+```
+
+---
+
+## API Notes
+
+All requests go to `https://api.balldontlie.io/v1` with your key in the `Authorization` header.
+
+- **Player search:** `GET /players?search={query}&per_page=10`
+- **Season averages:** `GET /season_averages?season={year}&player_ids[]={id}`
+  - Season uses start-year convention: `2025` = 2025–26 season
+  - Automatically falls back to the previous season if no data is available
+
+---
+
+## Author
+
+Built by **Hamza Ali**

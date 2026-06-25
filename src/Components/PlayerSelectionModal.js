@@ -1,31 +1,32 @@
 import React from 'react';
-import './PlayerSelectionModal.css';
 
 function PlayerSelectionModal({ players, onSelect, onClose, playerNumber }) {
-    return (
-        <div className="modal-overlay">
-            <div className="modal-content">
-                <h2>Select Player {playerNumber}</h2>
-                <div className="player-options">
-                    {players.map(player => (
-                        <div 
-                            key={player.id} 
-                            className="player-option"
-                            onClick={() => onSelect(player)}
-                        >
-                            <div className="player-info">
-                                <h3>{player.first_name} {player.last_name}</h3>
-                                <p>{player.team ? player.team.full_name : 'No Team'}</p>
-                                <p>Position: {player.position || 'N/A'}</p>
-                                {player.jersey_number && <p>#{player.jersey_number}</p>}
-                            </div>
-                        </div>
-                    ))}
-                </div>
-                <button onClick={onClose} className="modal-close-btn">Cancel</button>
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-box" onClick={e => e.stopPropagation()}>
+        <h2>Select Player {playerNumber}</h2>
+        <p className="modal-sub">Multiple players matched — choose the one you meant.</p>
+
+        {players.map(player => (
+          <div
+            key={player.id}
+            className="modal-option"
+            onClick={() => onSelect(player)}
+          >
+            <div className="modal-option-info">
+              <div className="player-name">{player.first_name} {player.last_name}</div>
+              <div className="player-meta">
+                {player.team ? player.team.full_name : 'Free Agent'} &middot; {player.position || 'N/A'}
+                {player.jersey_number ? ` · #${player.jersey_number}` : ''}
+              </div>
             </div>
-        </div>
-    );
+          </div>
+        ))}
+
+        <button className="modal-close-btn" onClick={onClose}>Cancel</button>
+      </div>
+    </div>
+  );
 }
 
 export default PlayerSelectionModal;

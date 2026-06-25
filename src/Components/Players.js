@@ -1,43 +1,209 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { searchPlayers, getPlayerSeasonAverages, getPlayerHeadshotUrl } from '../services/nbaApi';
+import PlayersJson from '../players.json';
+import { PLAYER_NBA_ID_MAP } from '../data/topPlayers';
 
-function Players(props){
+function getNbaId(fullName) {
+  // Check supplemental map first (newer players), then static JSON
+  if (PLAYER_NBA_ID_MAP[fullName]) return PLAYER_NBA_ID_MAP[fullName];
+  if (PlayersJson[fullName]) return PlayersJson[fullName].PlayerID;
+  return null;
+}
 
-    return(
-        <div>
-            <div className="container-question">
-                <div className="question-img1">
-                    <img height="300px" src="https://i.imgur.com/XMN6vJF.jpg" alt="Random Player"></img>
+// ── Single player search box ───────────────────────────────
+function PlayerSearchBox({ label, selectedPlayer, onSelect, prefillName }) {
+  const [query, setQuery]       = useState(prefillName || '');
+  const [results, setResults]   = useState([]);
+  const [loading, setLoading]   = useState(false);
+  const [open, setOpen]         = useState(false);
+  const wrapperRef              = useRef(null);
+  const timerRef                = useRef(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClick(e) {
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, []);
+
+  // Debounced search
+  useEffect(() => {
+    if (selectedPlayer) return; // already selected
+    clearTimeout(timerRef.current);
+    if (query.length < 2) { setResults([]); setOpen(false); return; }
+    timerRef.current = setTimeout(async () => {
+      setLoading(true);
+      const data = await searchPlayers(query);
+      setResults(data);
+      setOpen(data.length > 0);
+      setLoading(false);
+    }, 450);
+    return () => clearTimeout(timerRef.current);
+  }, [query, selectedPlayer]);
+
+  function handleSelect(player) {
+    setOpen(false);
+    setResults([]);
+    setQuery(`${player.first_name} ${player.last_name}`);
+    onSelect(player);
+  }
+
+  function handleClear() {
+    setQuery('');
+    setResults([]);
+    setOpen(false);
+    onSelect(null);
+  }
+
+  const nbaId = selectedPlayer
+    ? getNbaId(`${selectedPlayer.first_name} ${selectedPlayer.last_name}`)
+    : null;
+
+  return (
+    <div className="player-search-card">
+      <h2>{label}</h2>
+
+      <div className="search-wrapper" ref={wrapperRef}>
+        <input
+          className="search-input"
+          type="text"
+          placeholder="Search player name…"
+          value={query}
+          onChange={e => { setQuery(e.target.value); if (selectedPlayer) onSelect(null); }}
+          onFocus={() => results.length > 0 && setOpen(true)}
+          autoComplete="off"
+        />
+        {loading && <div className="search-spinner" />}
+
+        {open && results.length > 0 && (
+          <div className="search-dropdown">
+            {results.map(p => (
+              <div
+                key={p.id}
+                className="search-dropdown-item"
+                onMouseDown={() => handleSelect(p)}
+              >
+                <div className="player-name">{p.first_name} {p.last_name}</div>
+                <div className="player-meta">
+                  {p.team ? p.team.full_name : 'Free Agent'} &middot; {p.position || 'N/A'}
                 </div>
-                <div className="question-img2">
-                    <img height="300px"src="https://i.imgur.com/XMN6vJF.jpg" alt="Random Player"></img>
-                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {selectedPlayer && (
+        <div className="selected-player-card">
+          <img
+            src={nbaId ? getPlayerHeadshotUrl(nbaId) : 'https://via.placeholder.com/80?text=🏀'}
+            alt={`${selectedPlayer.first_name} ${selectedPlayer.last_name}`}
+            onError={e => { e.target.src = 'https://via.placeholder.com/80?text=🏀'; }}
+          />
+          <div className="selected-player-info">
+            <div className="player-name">{selectedPlayer.first_name} {selectedPlayer.last_name}</div>
+            <div className="player-meta">
+              {selectedPlayer.team ? selectedPlayer.team.full_name : 'Free Agent'} &middot; {selectedPlayer.position || 'N/A'}
             </div>
-            <div className="fighter">
-                <div className="player-one">
-                    <form onSubmit={props.handleSubmitOne}>
-                        <input type="text" className="input-area" onChange={props.handleChangeOne} placeholder="Enter full name"></input>
-                        <button type="submit" className="input-btn">Choose Player</button>
-                        {props.countCheckOne > 0 && <span> ✅</span>}
-                    </form>
-                </div>
-                <div className="player-two">
-                    <form onSubmit={props.handleSubmitTwo}>
-                        <input type="text" className="input-area" onChange={props.handleChangeTwo} placeholder="Enter full name"></input>
-                        <button type="submit" className="input-btn">Choose Player</button>
-                        {props.countCheckTwo > 0 && <span> ✅</span>}
-                    </form>
-                </div>
-            </div>
-            {props.countCheckOne + props.countCheckTwo === 2 &&
-            (<div className="button-continue">
-                <Link to="/stats">
-                    <button className="input-btn">Click here to continue</button>
-                </Link>
-            </div>
-            )}
+          </div>
+          <button
+            className="selected-player-check"
+            onClick={handleClear}
+            title="Clear selection"
+            style={{ background: 'none', color: 'var(--orange)', fontSize: 18, cursor: 'pointer' }}
+          >
+            ✕
+          </button>
         </div>
-    )
+      )}
+    </div>
+  );
+}
+
+// ── Main Players page ─────────────────────────────────────
+function Players() {
+  const navigate  = useNavigate();
+  const location  = useLocation();
+  const prefill   = location.state || {};
+
+  const [p1, setP1] = useState(null);
+  const [p2, setP2] = useState(null);
+  const [comparing, setComparing] = useState(false);
+  const [error, setError] = useState('');
+
+  const bothSelected = p1 && p2;
+
+  async function handleCompare() {
+    setError('');
+    setComparing(true);
+
+    const [res1, res2] = await Promise.all([
+      getPlayerSeasonAverages(p1.id),
+      getPlayerSeasonAverages(p2.id),
+    ]);
+
+    setComparing(false);
+
+    if (!res1 && !res2) {
+      setError('Could not load stats for either player. Check your API key in .env.');
+      return;
+    }
+
+    navigate('/stats', {
+      state: {
+        playerOne: p1,
+        playerTwo: p2,
+        playerOneStats: res1 ? res1.stats : null,
+        playerTwoStats: res2 ? res2.stats : null,
+        season: (res1 || res2).season,
+      },
+    });
+  }
+
+  return (
+    <div className="compare-page">
+      <h1 className="compare-title">Compare Players</h1>
+      <p className="compare-subtitle">Search for two players to compare their season averages head-to-head.</p>
+
+      <div className="compare-grid">
+        <PlayerSearchBox
+          label="Player 1"
+          selectedPlayer={p1}
+          onSelect={setP1}
+          prefillName={prefill.prefillOne || ''}
+        />
+
+        <div className="vs-divider">VS</div>
+
+        <PlayerSearchBox
+          label="Player 2"
+          selectedPlayer={p2}
+          onSelect={setP2}
+          prefillName={prefill.prefillTwo || ''}
+        />
+      </div>
+
+      <div className="compare-action">
+        <button
+          className="btn-primary"
+          onClick={handleCompare}
+          disabled={!bothSelected || comparing}
+          style={{ opacity: (!bothSelected || comparing) ? 0.5 : 1, cursor: (!bothSelected || comparing) ? 'not-allowed' : 'pointer' }}
+        >
+          {comparing ? '⏳ Loading Stats…' : '📊 Compare Stats'}
+        </button>
+        {!bothSelected && (
+          <p>Select both players to compare</p>
+        )}
+        {error && <p className="error-msg">{error}</p>}
+      </div>
+    </div>
+  );
 }
 
 export default Players;
